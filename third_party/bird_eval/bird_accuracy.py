@@ -4,8 +4,8 @@ import argparse
 import sqlite3
 import multiprocessing as mp
 from func_timeout import func_timeout, FunctionTimedOut
-from third_party.evaluator_base import EvaluatorBase
 
+exec_result = []
 
 def load_json(dir):
     with open(dir, 'r') as j:
@@ -83,6 +83,7 @@ def run_sqls_parallel(sqls, db_places, num_cpus=1, meta_time_out=30.0):
         pool.apply_async(execute_model, args=(predicted_sql, ground_truth, db_places[i], i, meta_time_out), callback=result_callback)
     pool.close()
     pool.join()
+    return exec_result
 
 def sort_results(list_of_dicts):
   return sorted(list_of_dicts, key=lambda x: x['sql_idx'])

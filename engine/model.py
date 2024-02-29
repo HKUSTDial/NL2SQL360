@@ -17,7 +17,8 @@ class MetaDataset:
     BIRD hardness: ["simple", "moderate", "challenging"]
     Spider hardness: ["easy", "medium", "hard", "extra"]
     """
-    hardness = Column(String, nullable=True, default=None)
+    hardness = Column(String, nullable=False)
+    db_domain = Column(String, nullable=False)
     
     count_query_fields = Column(Integer, nullable=False)
     count_group_by = Column(Integer, nullable=False)
@@ -55,6 +56,6 @@ def get_evaluation_model(dataset_name, evaluation_name):
     return type(f"DATASET_{dataset_name}_EVALUATION_{evaluation_name}", 
                 (MetaEvaluation, Base),
                 dict(
-                    id=Column(Integer, ForeignKey(f"DATASET_{dataset_name}")), 
+                    id=Column(Integer, ForeignKey(f"DATASET_{dataset_name}"), primary_key=True), 
                     __tablename__=f"DATASET_{dataset_name}_EVALUATION_{evaluation_name}"
                     ))

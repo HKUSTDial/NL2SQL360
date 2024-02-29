@@ -1,1 +1,6 @@
 **/data
+**/exp
+**/.vscode
+exp.ipynb
+test.py
+sql_parse_test.ipynb

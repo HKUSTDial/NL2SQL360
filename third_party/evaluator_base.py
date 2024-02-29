@@ -2,14 +2,12 @@
 
 class EvaluatorBase:
     
-    def __init__(self, golds, preds, db_paths):
-        self.golds = golds
-        self.preds = preds
-        self.db_paths = db_paths
+    metric_names = []
     
-    @property
-    def metric_names(self):
-        pass
+    def __init__(self, dataset, preds, dataset_split):
+        self.dataset = dataset
+        self.preds = preds
+        self.dataset_split = dataset_split
     
     def evaluate(self):
         """Evaluate

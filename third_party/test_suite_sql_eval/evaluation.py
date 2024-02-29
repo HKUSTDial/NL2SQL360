@@ -501,41 +501,39 @@ def print_scores(scores, etype, include_turn_acc=True):
             print_formated_s("exact match", exact_scores, '{:<20.3f}')
 
 
-def evaluate(gold, predict, db_dir, etype, kmaps, plug_value, keep_distinct, progress_bar_for_each_datapoint):
+def evaluate(golds, preds, db_dir, etype, kmaps, plug_value, keep_distinct, progress_bar_for_each_datapoint):
 
-    with open(gold) as f:
-        glist = []
-        gseq_one = []
-        for l in f.readlines():
-            if len(l.strip()) == 0:
-                glist.append(gseq_one)
-                gseq_one = []
-            else:
-                lstrip = l.strip().split('\t')
-                gseq_one.append(lstrip)
-
-        # include the last session
-        # this was previously ignored in the SParC evaluation script
-        # which might lead to slight differences in scores
-        if len(gseq_one) != 0:
+    glist = []
+    gseq_one = []
+    for l in golds:
+        if len(l.strip()) == 0:
             glist.append(gseq_one)
+            gseq_one = []
+        else:
+            lstrip = l.strip().split('\t')
+            gseq_one.append(lstrip)
+
+    # include the last session
+    # this was previously ignored in the SParC evaluation script
+    # which might lead to slight differences in scores
+    if len(gseq_one) != 0:
+        glist.append(gseq_one)
 
     # spider formatting indicates that there is only one "single turn"
     # do not report "turn accuracy" for SPIDER
     include_turn_acc = len(glist) > 1
 
-    with open(predict) as f:
-        plist = []
-        pseq_one = []
-        for l in f.readlines():
-            if len(l.strip()) == 0:
-                plist.append(pseq_one)
-                pseq_one = []
-            else:
-                pseq_one.append(l.strip().split('\t'))
-
-        if len(pseq_one) != 0:
+    plist = []
+    pseq_one = []
+    for l in preds:
+        if len(l.strip()) == 0:
             plist.append(pseq_one)
+            pseq_one = []
+        else:
+            pseq_one.append(l.strip().split('\t'))
+
+    if len(pseq_one) != 0:
+        plist.append(pseq_one)
 
     assert len(plist) == len(glist), "number of sessions must equal"
 
@@ -587,22 +585,22 @@ def evaluate(gold, predict, db_dir, etype, kmaps, plug_value, keep_distinct, pro
             except:
                 # If p_sql is not valid, then we will use an empty sql to evaluate with the correct sql
                 p_sql = {
-                "except": None,
-                "from": {
-                    "conds": [],
-                    "table_units": []
-                },
-                "groupBy": [],
-                "having": [],
-                "intersect": None,
-                "limit": None,
-                "orderBy": [],
-                "select": [
-                    False,
-                    []
-                ],
-                "union": None,
-                "where": []
+                    "except": None,
+                    "from": {
+                        "conds": [],
+                        "table_units": []
+                    },
+                    "groupBy": [],
+                    "having": [],
+                    "intersect": None,
+                    "limit": None,
+                    "orderBy": [],
+                    "select": [
+                        False,
+                        []
+                    ],
+                    "union": None,
+                    "where": []
                 }
 
             if etype in ["all", "exec"]:
@@ -629,9 +627,9 @@ def evaluate(gold, predict, db_dir, etype, kmaps, plug_value, keep_distinct, pro
                 partial_scores = evaluator.partial_scores
                 if exact_score == 0:
                     turn_scores['exact'].append(0)
-                    print("{} pred: {}".format(hardness, p_str))
-                    print("{} gold: {}".format(hardness, g_str))
-                    print("")
+                    # print("{} pred: {}".format(hardness, p_str))
+                    # print("{} gold: {}".format(hardness, g_str))
+                    # print("")
                 else:
                     turn_scores['exact'].append(1)
                 scores[turn_id]['exact'] += exact_score
@@ -658,6 +656,7 @@ def evaluate(gold, predict, db_dir, etype, kmaps, plug_value, keep_distinct, pro
                     'goldSQL': g_str,
                     'hardness': hardness,
                     'exact': exact_score,
+                    'exec': exec_score,
                     'partial': partial_scores
                 })
 
@@ -702,7 +701,8 @@ def evaluate(gold, predict, db_dir, etype, kmaps, plug_value, keep_distinct, pro
                         2.0 * scores[level]['partial'][type_]['acc'] * scores[level]['partial'][type_]['rec'] / (
                         scores[level]['partial'][type_]['rec'] + scores[level]['partial'][type_]['acc'])
 
-    print_scores(scores, etype, include_turn_acc=include_turn_acc)
+    # print_scores(scores, etype, include_turn_acc=include_turn_acc)
+    return entries
 
 
 # Rebuild SQL functions for value evaluation
