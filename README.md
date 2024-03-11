@@ -42,3 +42,14 @@ python bird_example.py
 ```
 
 ## Experiments
+
+#### Execution Accuracy vs. SQL Characteristics
+
+![sql_charac](./assets/sql_charac.png)
+
+#### Query Variance Testing
+
+<div align="center"><img width="40%" src="./assets/QVT.png"></div>
+
+#### Database Domain Adaption
+<div align="center"><img width="50%" src="./assets/domain.png"></div>
