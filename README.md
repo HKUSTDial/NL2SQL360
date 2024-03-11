@@ -1,6 +1,6 @@
 # NLSQL360
 
-<img src="./assets/nl2sql360.png" alt="nl2sql360" style="zoom: 33%;" />
+<img src="./assets/nl2sql360.png" alt="nl2sql360" style="zoom: 25%;" />
 
 ## Overview
 
