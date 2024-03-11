@@ -20,6 +20,7 @@ Active it and install the requirements:
 
 ```
 pip install -r requirements.txt
+python -c "import nltk;nltk.download('punkt')" 
 ```
 
 ## Data Preparation
@@ -28,10 +29,16 @@ You need to download specific dataset and unzip to the folder `./data/dataset/{D
 
 ## Run
 
-### Data Preprocess
+For Spider:
 
 ```
-from engine.engine import Engine
-
+python spider_example.py
 ```
 
+For BIRD:
+
+```
+python bird_example.py
+```
+
+## Experiments
