@@ -1,6 +1,6 @@
 # NLSQL360
 
-<div align="center"><img width="25%" src="./assets/nl2sql360.png"></div>
+<div align="center"><img width="25%" src="./assets/nl2sql360.png"><img width="75%" src="./assets/leaderboard.png"></div>
 
 ## Overview
 
@@ -8,9 +8,30 @@
 
 In addition, we propose **SuperSQL**, which achieves the top rank on the Spider-test leaderboard with an execution accuracy of **87%**.
 
+## Environment Setup
 
+Create a virtual anaconda environment:
 
+```
+conda create -n nlsql360 python=3.9
+```
 
+Active it and install the requirements:
 
+```
+pip install -r requirements.txt
+```
 
+## Data Preparation
+
+You need to download specific dataset and unzip to the folder `./data/dataset/{DATASET}`. For example, you can download and unzip the [Spider](https://yale-lily.github.io/spider) to the folder `./data/dataset/spider`.
+
+## Run
+
+### Data Preprocess
+
+```
+from engine.engine import Engine
+
+```
 
