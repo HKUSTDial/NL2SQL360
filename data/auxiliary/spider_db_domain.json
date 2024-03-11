@@ -1,0 +1,832 @@
+[
+  {
+    "split": "train",
+    "db_id": "perpetrator",
+    "domain": "criminal"
+  },
+  {
+    "split": "train",
+    "db_id": "college_2",
+    "domain": "college"
+  },
+  {
+    "split": "train",
+    "db_id": "flight_company",
+    "domain": "transportation"
+  },
+  {
+    "split": "train",
+    "db_id": "icfp_1",
+    "domain": "academic"
+  },
+  {
+    "split": "train",
+    "db_id": "body_builder",
+    "domain": "sports"
+  },
+  {
+    "split": "train",
+    "db_id": "storm_record",
+    "domain": "geography"
+  },
+  {
+    "split": "train",
+    "db_id": "pilot_record",
+    "domain": "transportation"
+  },
+  {
+    "split": "train",
+    "db_id": "race_track",
+    "domain": "sports"
+  },
+  {
+    "split": "train",
+    "db_id": "academic",
+    "domain": "academic"
+  },
+  {
+    "split": "train",
+    "db_id": "department_store",
+    "domain": "retail"
+  },
+  {
+    "split": "train",
+    "db_id": "music_4",
+    "domain": "music"
+  },
+  {
+    "split": "train",
+    "db_id": "insurance_fnol",
+    "domain": "business"
+  },
+  {
+    "split": "train",
+    "db_id": "cinema",
+    "domain": "movie"
+  },
+  {
+    "split": "train",
+    "db_id": "decoration_competition",
+    "domain": "competition"
+  },
+  {
+    "split": "train",
+    "db_id": "phone_market",
+    "domain": "retail"
+  },
+  {
+    "split": "train",
+    "db_id": "store_product",
+    "domain": "retail"
+  },
+  {
+    "split": "train",
+    "db_id": "assets_maintenance",
+    "domain": "business"
+  },
+  {
+    "split": "train",
+    "db_id": "student_assessment",
+    "domain": "education"
+  },
+  {
+    "split": "dev",
+    "db_id": "dog_kennels",
+    "domain": "pet"
+  },
+  {
+    "split": "train",
+    "db_id": "music_1",
+    "domain": "music"
+  },
+  {
+    "split": "train",
+    "db_id": "company_employee",
+    "domain": "business"
+  },
+  {
+    "split": "train",
+    "db_id": "farm",
+    "domain": "agriculture"
+  },
+  {
+    "split": "train",
+    "db_id": "solvency_ii",
+    "domain": "business"
+  },
+  {
+    "split": "train",
+    "db_id": "city_record",
+    "domain": "geography"
+  },
+  {
+    "split": "train",
+    "db_id": "swimming",
+    "domain": "sports"
+  },
+  {
+    "split": "dev",
+    "db_id": "flight_2",
+    "domain": "transportation"
+  },
+  {
+    "split": "train",
+    "db_id": "election",
+    "domain": "government"
+  },
+  {
+    "split": "train",
+    "db_id": "manufactory_1",
+    "domain": "manufacturing"
+  },
+  {
+    "split": "train",
+    "db_id": "debate",
+    "domain": "competition"
+  },
+  {
+    "split": "train",
+    "db_id": "network_2",
+    "domain": "social"
+  },
+  {
+    "split": "train",
+    "db_id": "local_govt_in_alabama",
+    "domain": "government"
+  },
+  {
+    "split": "train",
+    "db_id": "climbing",
+    "domain": "sports"
+  },
+  {
+    "split": "train",
+    "db_id": "e_learning",
+    "domain": "education"
+  },
+  {
+    "split": "train",
+    "db_id": "scientist_1",
+    "domain": "academic"
+  },
+  {
+    "split": "train",
+    "db_id": "ship_1",
+    "domain": "transportation"
+  },
+  {
+    "split": "train",
+    "db_id": "entertainment_awards",
+    "domain": "entertainment"
+  },
+  {
+    "split": "train",
+    "db_id": "allergy_1",
+    "domain": "healthcare"
+  },
+  {
+    "split": "train",
+    "db_id": "imdb",
+    "domain": "movie"
+  },
+  {
+    "split": "train",
+    "db_id": "products_for_hire",
+    "domain": "retail"
+  },
+  {
+    "split": "train",
+    "db_id": "candidate_poll",
+    "domain": "government"
+  },
+  {
+    "split": "train",
+    "db_id": "chinook_1",
+    "domain": "retail"
+  },
+  {
+    "split": "train",
+    "db_id": "flight_4",
+    "domain": "transportation"
+  },
+  {
+    "split": "dev",
+    "db_id": "pets_1",
+    "domain": "pet"
+  },
+  {
+    "split": "train",
+    "db_id": "dorm_1",
+    "domain": "college"
+  },
+  {
+    "split": "train",
+    "db_id": "journal_committee",
+    "domain": "media"
+  },
+  {
+    "split": "train",
+    "db_id": "flight_1",
+    "domain": "transportation"
+  },
+  {
+    "split": "train",
+    "db_id": "medicine_enzyme_interaction",
+    "domain": "medical"
+  },
+  {
+    "split": "train",
+    "db_id": "local_govt_and_lot",
+    "domain": "government"
+  },
+  {
+    "split": "train",
+    "db_id": "station_weather",
+    "domain": "transportation"
+  },
+  {
+    "split": "train",
+    "db_id": "shop_membership",
+    "domain": "retail"
+  },
+  {
+    "split": "train",
+    "db_id": "driving_school",
+    "domain": "education"
+  },
+  {
+    "split": "dev",
+    "db_id": "concert_singer",
+    "domain": "entertainment"
+  },
+  {
+    "split": "train",
+    "db_id": "music_2",
+    "domain": "music"
+  },
+  {
+    "split": "train",
+    "db_id": "sports_competition",
+    "domain": "competition"
+  },
+  {
+    "split": "train",
+    "db_id": "railway",
+    "domain": "transportation"
+  },
+  {
+    "split": "train",
+    "db_id": "inn_1",
+    "domain": "accommodation"
+  },
+  {
+    "split": "dev",
+    "db_id": "museum_visit",
+    "domain": "entertainment"
+  },
+  {
+    "split": "train",
+    "db_id": "browser_web",
+    "domain": "technology"
+  },
+  {
+    "split": "train",
+    "db_id": "baseball_1",
+    "domain": "sports"
+  },
+  {
+    "split": "train",
+    "db_id": "architecture",
+    "domain": "building"
+  },
+  {
+    "split": "train",
+    "db_id": "csu_1",
+    "domain": "college"
+  },
+  {
+    "split": "train",
+    "db_id": "tracking_orders",
+    "domain": "retail"
+  },
+  {
+    "split": "train",
+    "db_id": "insurance_policies",
+    "domain": "business"
+  },
+  {
+    "split": "train",
+    "db_id": "gas_company",
+    "domain": "business"
+  },
+  {
+    "split": "train",
+    "db_id": "e_government",
+    "domain": "government"
+  },
+  {
+    "split": "train",
+    "db_id": "school_bus",
+    "domain": "transportation"
+  },
+  {
+    "split": "train",
+    "db_id": "machine_repair",
+    "domain": "technology"
+  },
+  {
+    "split": "train",
+    "db_id": "theme_gallery",
+    "domain": "entertainment"
+  },
+  {
+    "split": "train",
+    "db_id": "film_rank",
+    "domain": "movie"
+  },
+  {
+    "split": "train",
+    "db_id": "party_people",
+    "domain": "entertainment"
+  },
+  {
+    "split": "train",
+    "db_id": "hospital_1",
+    "domain": "medical"
+  },
+  {
+    "split": "train",
+    "db_id": "customers_campaigns_ecommerce",
+    "domain": "business"
+  },
+  {
+    "split": "train",
+    "db_id": "gymnast",
+    "domain": "sports"
+  },
+  {
+    "split": "train",
+    "db_id": "restaurants",
+    "domain": "food"
+  },
+  {
+    "split": "train",
+    "db_id": "mountain_photos",
+    "domain": "technology"
+  },
+  {
+    "split": "dev",
+    "db_id": "battle_death",
+    "domain": "battle"
+  },
+  {
+    "split": "train",
+    "db_id": "cre_Doc_Control_Systems",
+    "domain": "document"
+  },
+  {
+    "split": "train",
+    "db_id": "tracking_share_transactions",
+    "domain": "business"
+  },
+  {
+    "split": "train",
+    "db_id": "apartment_rentals",
+    "domain": "accommodation"
+  },
+  {
+    "split": "dev",
+    "db_id": "student_transcripts_tracking",
+    "domain": "college"
+  },
+  {
+    "split": "train",
+    "db_id": "cre_Docs_and_Epenses",
+    "domain": "document"
+  },
+  {
+    "split": "train",
+    "db_id": "ship_mission",
+    "domain": "transportation"
+  },
+  {
+    "split": "train",
+    "db_id": "company_office",
+    "domain": "building"
+  },
+  {
+    "split": "train",
+    "db_id": "tracking_software_problems",
+    "domain": "software"
+  },
+  {
+    "split": "train",
+    "db_id": "products_gen_characteristics",
+    "domain": "business"
+  },
+  {
+    "split": "train",
+    "db_id": "coffee_shop",
+    "domain": "business"
+  },
+  {
+    "split": "train",
+    "db_id": "riding_club",
+    "domain": "club"
+  },
+  {
+    "split": "train",
+    "db_id": "customers_card_transactions",
+    "domain": "business"
+  },
+  {
+    "split": "train",
+    "db_id": "county_public_safety",
+    "domain": "government"
+  },
+  {
+    "split": "train",
+    "db_id": "performance_attendance",
+    "domain": "entertainment"
+  },
+  {
+    "split": "train",
+    "db_id": "club_1",
+    "domain": "club"
+  },
+  {
+    "split": "dev",
+    "db_id": "singer",
+    "domain": "music"
+  },
+  {
+    "split": "train",
+    "db_id": "culture_company",
+    "domain": "club"
+  },
+  {
+    "split": "dev",
+    "db_id": "cre_Doc_Template_Mgt",
+    "domain": "document"
+  },
+  {
+    "split": "train",
+    "db_id": "musical",
+    "domain": "movie"
+  },
+  {
+    "split": "dev",
+    "db_id": "world_1",
+    "domain": "geography"
+  },
+  {
+    "split": "train",
+    "db_id": "device",
+    "domain": "retail"
+  },
+  {
+    "split": "train",
+    "db_id": "tracking_grants_for_research",
+    "domain": "project"
+  },
+  {
+    "split": "dev",
+    "db_id": "employee_hire_evaluation",
+    "domain": "business"
+  },
+  {
+    "split": "train",
+    "db_id": "movie_1",
+    "domain": "movie"
+  },
+  {
+    "split": "dev",
+    "db_id": "network_1",
+    "domain": "social"
+  },
+  {
+    "split": "dev",
+    "db_id": "poker_player",
+    "domain": "game"
+  },
+  {
+    "split": "train",
+    "db_id": "program_share",
+    "domain": "tv show"
+  },
+  {
+    "split": "train",
+    "db_id": "aircraft",
+    "domain": "transportation"
+  },
+  {
+    "split": "train",
+    "db_id": "restaurant_1",
+    "domain": "food"
+  },
+  {
+    "split": "train",
+    "db_id": "customers_and_invoices",
+    "domain": "retail"
+  },
+  {
+    "split": "train",
+    "db_id": "insurance_and_eClaims",
+    "domain": "business"
+  },
+  {
+    "split": "train",
+    "db_id": "college_1",
+    "domain": "college"
+  },
+  {
+    "split": "train",
+    "db_id": "local_govt_mdm",
+    "domain": "government"
+  },
+  {
+    "split": "train",
+    "db_id": "book_2",
+    "domain": "media"
+  },
+  {
+    "split": "train",
+    "db_id": "hr_1",
+    "domain": "business"
+  },
+  {
+    "split": "train",
+    "db_id": "soccer_1",
+    "domain": "sports"
+  },
+  {
+    "split": "train",
+    "db_id": "sakila_1",
+    "domain": "movie"
+  },
+  {
+    "split": "dev",
+    "db_id": "real_estate_properties",
+    "domain": "business"
+  },
+  {
+    "split": "train",
+    "db_id": "college_3",
+    "domain": "college"
+  },
+  {
+    "split": "dev",
+    "db_id": "course_teach",
+    "domain": "college"
+  },
+  {
+    "split": "train",
+    "db_id": "roller_coaster",
+    "domain": "game"
+  },
+  {
+    "split": "train",
+    "db_id": "customer_deliveries",
+    "domain": "retail"
+  },
+  {
+    "split": "train",
+    "db_id": "game_injury",
+    "domain": "competition"
+  },
+  {
+    "split": "train",
+    "db_id": "school_finance",
+    "domain": "college"
+  },
+  {
+    "split": "train",
+    "db_id": "scholar",
+    "domain": "academic"
+  },
+  {
+    "split": "dev",
+    "db_id": "voter_1",
+    "domain": "government"
+  },
+  {
+    "split": "train",
+    "db_id": "match_season",
+    "domain": "competition"
+  },
+  {
+    "split": "train",
+    "db_id": "small_bank_1",
+    "domain": "business"
+  },
+  {
+    "split": "dev",
+    "db_id": "wta_1",
+    "domain": "competition"
+  },
+  {
+    "split": "train",
+    "db_id": "yelp",
+    "domain": "business"
+  },
+  {
+    "split": "train",
+    "db_id": "student_1",
+    "domain": "college"
+  },
+  {
+    "split": "train",
+    "db_id": "manufacturer",
+    "domain": "manufacturing"
+  },
+  {
+    "split": "train",
+    "db_id": "store_1",
+    "domain": "retail"
+  },
+  {
+    "split": "train",
+    "db_id": "train_station",
+    "domain": "transportation"
+  },
+  {
+    "split": "train",
+    "db_id": "document_management",
+    "domain": "document"
+  },
+  {
+    "split": "train",
+    "db_id": "formula_1",
+    "domain": "technology"
+  },
+  {
+    "split": "train",
+    "db_id": "game_1",
+    "domain": "game"
+  },
+  {
+    "split": "train",
+    "db_id": "loan_1",
+    "domain": "business"
+  },
+  {
+    "split": "train",
+    "db_id": "bike_1",
+    "domain": "transportation"
+  },
+  {
+    "split": "train",
+    "db_id": "entrepreneur",
+    "domain": "social"
+  },
+  {
+    "split": "dev",
+    "db_id": "orchestra",
+    "domain": "entertainment"
+  },
+  {
+    "split": "train",
+    "db_id": "cre_Drama_Workshop_Groups",
+    "domain": "retail"
+  },
+  {
+    "split": "dev",
+    "db_id": "car_1",
+    "domain": "technology"
+  },
+  {
+    "split": "train",
+    "db_id": "geo",
+    "domain": "geography"
+  },
+  {
+    "split": "train",
+    "db_id": "behavior_monitoring",
+    "domain": "college"
+  },
+  {
+    "split": "train",
+    "db_id": "cre_Doc_Tracking_DB",
+    "domain": "document"
+  },
+  {
+    "split": "train",
+    "db_id": "university_basketball",
+    "domain": "sports"
+  },
+  {
+    "split": "train",
+    "db_id": "soccer_2",
+    "domain": "sports"
+  },
+  {
+    "split": "train",
+    "db_id": "activity_1",
+    "domain": "college"
+  },
+  {
+    "split": "train",
+    "db_id": "cre_Theme_park",
+    "domain": "entertainment"
+  },
+  {
+    "split": "train",
+    "db_id": "twitter_1",
+    "domain": "media"
+  },
+  {
+    "split": "train",
+    "db_id": "election_representative",
+    "domain": "government"
+  },
+  {
+    "split": "train",
+    "db_id": "voter_2",
+    "domain": "government"
+  },
+  {
+    "split": "train",
+    "db_id": "wedding",
+    "domain": "wed"
+  },
+  {
+    "split": "train",
+    "db_id": "news_report",
+    "domain": "media"
+  },
+  {
+    "split": "train",
+    "db_id": "wine_1",
+    "domain": "food"
+  },
+  {
+    "split": "train",
+    "db_id": "customers_and_addresses",
+    "domain": "retail"
+  },
+  {
+    "split": "train",
+    "db_id": "protein_institute",
+    "domain": "business"
+  },
+  {
+    "split": "train",
+    "db_id": "school_player",
+    "domain": "college"
+  },
+  {
+    "split": "train",
+    "db_id": "phone_1",
+    "domain": "technology"
+  },
+  {
+    "split": "dev",
+    "db_id": "tvshow",
+    "domain": "tv show"
+  },
+  {
+    "split": "train",
+    "db_id": "wrestler",
+    "domain": "sports"
+  },
+  {
+    "split": "train",
+    "db_id": "customer_complaints",
+    "domain": "retail"
+  },
+  {
+    "split": "train",
+    "db_id": "department_management",
+    "domain": "business"
+  },
+  {
+    "split": "train",
+    "db_id": "customers_and_products_contacts",
+    "domain": "retail"
+  },
+  {
+    "split": "train",
+    "db_id": "company_1",
+    "domain": "business"
+  },
+  {
+    "split": "train",
+    "db_id": "workshop_paper",
+    "domain": "academic"
+  },
+  {
+    "split": "train",
+    "db_id": "epinions_1",
+    "domain": "academic"
+  },
+  {
+    "split": "train",
+    "db_id": "party_host",
+    "domain": "entertainment"
+  },
+  {
+    "split": "train",
+    "db_id": "product_catalog",
+    "domain": "retail"
+  }
+]

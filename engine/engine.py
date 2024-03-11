@@ -25,7 +25,8 @@ class Engine:
         
         self.dataset_evaluator_cls = {
             SpiderDataset: [SpiderAccraucyEvaluator, VesEvaluator],
-            BirdDataset: [BirdAccraucyEvaluator, VesEvaluator]
+            # BirdDataset: [BirdAccraucyEvaluator, VesEvaluator]
+            BirdDataset: [BirdAccraucyEvaluator]
         }
     
     def create_dataset_table(self, dataset, dataset_split):
@@ -117,6 +118,7 @@ class Engine:
             }
             for metric in metric_names:
                 item[metric] = eval_results[metric][idx]
+            item["ves"] = 0
             insert_data.append(item)
         
         with Session(self.engine) as session:

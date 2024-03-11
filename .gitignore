@@ -1,7 +1,4 @@
-**/data
+**/data/dataset/**
 **/exp
 **/.vscode
-exp.ipynb
-test.py
-sql_parse_test.ipynb
 **/__pycache__
