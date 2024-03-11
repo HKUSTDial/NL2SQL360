@@ -60,3 +60,7 @@ This set of experiments aims to evaluate the nl2sql system’s adaptability to v
 In practical nl2sql applications, scenarios typically involve domain-specific databases, like movies or sports, each with unique schema designs and terminologies. Assessing the detailed performance of methods across these domains is crucial for effective model application. In this set of experiments, we classified the 140 databases in the Spider train set and the 20 databases in the development set into 33 domains, including social and geography, among others. We measured the performance of methods across different domain subsets in the Spider development set using the Execution Accuracy (EX) metric. **Different NL2SQL methods exhibit varying biases towards different domains, with even the same method potentially showing significant performance variations across different domains. Furthermore, LLM-based methods tend to have more stable adaptation across different domains compared to PLM-based methods.**
 
 <div align="center"><img width="50%" src="./assets/domain.png"></div>
+
+#### More experiments
+Please refer to our paper[under review](#).
+
