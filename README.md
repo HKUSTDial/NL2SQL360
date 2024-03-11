@@ -8,6 +8,12 @@
 
 In addition, we propose **SuperSQL**, which achieves the top rank on the Spider-test leaderboard with an execution accuracy of **87%**.
 
+### Quick start
+
+We publish our online Web Demo based on Streamlit. **The more powerful online Web-System will be published soon.**
+
+Web demo: [Streamlit (hypersql.streamlit.app)](https://hypersql.streamlit.app/)
+
 ## Environment Setup
 
 Create a virtual anaconda environment:
@@ -43,24 +49,31 @@ python bird_example.py
 
 ## Experiments
 
-#### Execution Accuracy vs. SQL Characteristics
+### Execution Accuracy vs. SQL Characteristics
 
 Our **NLSQL360** supports sql query filtering based on individual sql clauses, their combinations, or user-defined conditions. We demonstrate only four representative aspects based on Spider-dev dataset. We run all methods on these four subsets of sql queries and compute the Execution Accuracy (EX) metric.
 
 ![sql_charac](./assets/sql_charac.png)
 
-#### Query Variance Testing
+### Query Variance Testing
 
 This set of experiments aims to evaluate the nl2sql system’s adaptability to various natural language phrasings and structures, reflecting the diversity anticipated in practical applications. To this end, we evaluate different LLM-based and PLM-based methods on the Spider dataset. We use our proposed **Query Variance Testing (QVT)** metric for this evaluation. **Although the LLM-based method performs well in many scenarios, its effectiveness on Query Variance Testing is unexpectedly inferior to the PLM-based methods.**
 
 <div align="center"><img width="40%" src="./assets/QVT.png"></div>
 
-#### Database Domain Adaption
+### Database Domain Adaption
 
 In practical nl2sql applications, scenarios typically involve domain-specific databases, like movies or sports, each with unique schema designs and terminologies. Assessing the detailed performance of methods across these domains is crucial for effective model application. In this set of experiments, we classified the 140 databases in the Spider train set and the 20 databases in the development set into 33 domains, including social and geography, among others. We measured the performance of methods across different domain subsets in the Spider development set using the Execution Accuracy (EX) metric. **Different NL2SQL methods exhibit varying biases towards different domains, with even the same method potentially showing significant performance variations across different domains. Furthermore, LLM-based methods tend to have more stable adaptation across different domains compared to PLM-based methods.**
 
 <div align="center"><img width="50%" src="./assets/domain.png"></div>
 
-#### More experiments
-Please refer to our paper[under review](#).
+### More experiments
+Please refer to our paper [under review](#).
 
+## Road Map
+
+:white_check_mark:Release **NLSQL360** evaluation code.
+
+:white_check_mark:Release **NLSQL360** experiments data.
+
+:clock10:Refactor **NLSQL360** Web-System.
