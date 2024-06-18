@@ -68,7 +68,7 @@ In practical nl2sql applications, scenarios typically involve domain-specific da
 <div align="center"><img width="50%" src="./assets/domain.png"></div>
 
 ### More experiments
-Please refer to our paper [under review](#).
+Please refer to our paper [The Dawn of Natural Language to SQL: Are We Fully Ready?](https://arxiv.org/abs/2406.01265).
 
 ## Road Map
 
@@ -77,3 +77,16 @@ Please refer to our paper [under review](#).
 :white_check_mark:Release **NLSQL360** experiments data.
 
 :clock10:Refactor **NLSQL360** Web-System.
+
+## Citation
+
+```
+@misc{li2024dawn,
+      title={The Dawn of Natural Language to SQL: Are We Fully Ready?}, 
+      author={Boyan Li and Yuyu Luo and Chengliang Chai and Guoliang Li and Nan Tang},
+      year={2024},
+      eprint={2406.01265},
+      archivePrefix={arXiv},
+      primaryClass={id='cs.DB' full_name='Databases' is_active=True alt_name=None in_archive='cs' is_general=False description='Covers database management, datamining, and data processing. Roughly includes material in ACM Subject Classes E.2, E.5, H.0, H.2, and J.1.'}
+}
+```
