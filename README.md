@@ -126,7 +126,7 @@ Please refer to our paper [The Dawn of Natural Language to SQL: Are We Fully Rea
 
 All predicted SQLs file: [NL2SQL360/data/predict](https://github.com/BugMaker-Boyan/NL2SQL360/tree/master/data/predict)
 
-SQLite Database with all evaluation results : [NL2SQL360/data/storage/nl2sql360.sqlite](https://github.com/BugMaker-Boyan/NL2SQL360/blob/master/data/storage/hypersql.sqlite)
+SQLite Database with all evaluation results : [NL2SQL360/data/storage/nl2sql360.sqlite](https://github.com/BugMaker-Boyan/NL2SQL360/blob/master/data/storage/nl2sql360.sqlite)
 
 ## :dart:Road Map
 
