@@ -3,7 +3,7 @@ from dataset.dataset_builder import SpiderDataset
 import os
 
 if __name__ == "__main__":
-    db_url = "sqlite:///data/storage/hypersql.sqlite"
+    db_url = "sqlite:///data/storage/nl2sql360.sqlite"
     engine = Engine(db_url)
     
     spider_dataset = SpiderDataset("data/dataset")
