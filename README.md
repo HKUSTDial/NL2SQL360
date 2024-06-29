@@ -6,7 +6,7 @@
 
 ## :dizzy:Overview
 
-**NL2SQL360** is a testbed for fine-grained evaluation of NL2SQL solutions. Our testbed integrates existing NL2SQL benchmarks, a repository of NL2SQL models, and various evaluation metrics, which aims to provide an intuitive and user-friendly platform to enable both standard and customized performance evaluations. Users can utilize **NLSQL360** to assess different NL2SQL methods against established benchmarks or tailor their evaluations based on specific criteria. This flexibility allows for testing solutions in specific data domains or analyzing performance on different characteristics of SQL queries. 
+**NL2SQL360** is a testbed for fine-grained evaluation of NL2SQL solutions. Our testbed integrates existing NL2SQL benchmarks, a repository of NL2SQL models, and various evaluation metrics, which aims to provide an intuitive and user-friendly platform to enable both standard and customized performance evaluations. Users can utilize **NL2SQL360** to assess different NL2SQL methods against established benchmarks or tailor their evaluations based on specific criteria. This flexibility allows for testing solutions in specific data domains or analyzing performance on different characteristics of SQL queries. 
 
 In addition, we propose **SuperSQL**, which achieves competitive performance with execution accuracy of **87%** and **62.66%** on the Spider and BIRD test sets, respectively.
 
@@ -98,7 +98,7 @@ SELECT AVG(exec_acc) as exec_acc FROM (
 
 ### Execution Accuracy vs. SQL Characteristics
 
-Our **NLSQL360** supports sql query filtering based on individual sql clauses, their combinations, or user-defined conditions. We demonstrate only four representative aspects based on Spider-dev dataset. We run all methods on these four subsets of sql queries and compute the Execution Accuracy (EX) metric.
+Our **NL2SQL360** supports sql query filtering based on individual sql clauses, their combinations, or user-defined conditions. We demonstrate only four representative aspects based on Spider-dev dataset. We run all methods on these four subsets of sql queries and compute the Execution Accuracy (EX) metric.
 
 <div align="center"><img width="50%" src="./assets/Spider_Heatmap.png"><img width="50%" src="./assets/BIRD_Heatmap.png"></div>
 
@@ -112,7 +112,7 @@ This set of experiments aims to evaluate the NL2SQL system’s adaptability to v
 
 ### Database Domain Adaption
 
-In practical nl2sql applications, scenarios typically involve domain-specific databases, like movies or sports, each with unique schema designs and terminologies. Assessing the detailed performance of methods across these domains is crucial for effective model application. In this set of experiments, we classified the 140 databases in the Spider train set and the 20 databases in the development set into 33 domains, including social and geography, among others. We measured the performance of methods across different domain subsets in the Spider development set using the Execution Accuracy (EX) metric. **Different methods exhibit varying biases towards different domains, and there is no clear winner between LLM-based and PLM-based methods. However, in-domain training data during fine-tuning process is crucial for model performance in specific domains.**
+In practical NL2SQL applications, scenarios typically involve domain-specific databases, like movies or sports, each with unique schema designs and terminologies. Assessing the detailed performance of methods across these domains is crucial for effective model application. In this set of experiments, we classified the 140 databases in the Spider train set and the 20 databases in the development set into 33 domains, including social and geography, among others. We measured the performance of methods across different domain subsets in the Spider development set using the Execution Accuracy (EX) metric. **Different methods exhibit varying biases towards different domains, and there is no clear winner between LLM-based and PLM-based methods. However, in-domain training data during fine-tuning process is crucial for model performance in specific domains.**
 
 <div align="center"><img width="50%" src="./assets/DB_Domain_Heatmap.png"></div>
 

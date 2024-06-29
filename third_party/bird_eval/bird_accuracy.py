@@ -76,6 +76,7 @@ def package_sqls(sql_path, db_root_path, mode='gpt', data_mode='dev'):
     return clean_sqls, db_path_list
 
 def run_sqls_parallel(sqls, db_places, num_cpus=1, meta_time_out=30.0):
+    exec_result.clear()
     pool = mp.Pool(processes=num_cpus)
     for i,sql_pair in enumerate(sqls):
 

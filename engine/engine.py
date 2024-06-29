@@ -25,8 +25,7 @@ class Engine:
         
         self.dataset_evaluator_cls = {
             SpiderDataset: [SpiderAccraucyEvaluator, VesEvaluator],
-            # BirdDataset: [BirdAccraucyEvaluator, VesEvaluator]
-            BirdDataset: [BirdAccraucyEvaluator]
+            BirdDataset: [BirdAccraucyEvaluator, VesEvaluator]
         }
     
     def create_dataset_table(self, dataset, dataset_split):
