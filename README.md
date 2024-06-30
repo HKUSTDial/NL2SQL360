@@ -10,6 +10,9 @@
 
 In addition, we propose **SuperSQL**, which achieves competitive performance with execution accuracy of **87%** and **62.66%** on the Spider and BIRD test sets, respectively.
 
+## :tada:News
+[24/6/30] Our paper [The Dawn of Natural Language to SQL: Are We Fully Ready?](https://arxiv.org/abs/2406.01265) has been accepted by VLDB'24.
+
 ## :rocket:Quick start
 
 We publish our online Web Demo based on Streamlit. **The more powerful online Web-System will be published soon.**
