@@ -1,0 +1,10 @@
+LICENSE
+README.md
+setup.py
+src/nl2sql360.egg-info/PKG-INFO
+src/nl2sql360.egg-info/SOURCES.txt
+src/nl2sql360.egg-info/dependency_links.txt
+src/nl2sql360.egg-info/entry_points.txt
+src/nl2sql360.egg-info/top_level.txt
+test/test_dataset_import.py
+test/test_evaluation.py

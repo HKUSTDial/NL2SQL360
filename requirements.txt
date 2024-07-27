@@ -1,5 +1,0 @@
-sqlglot[rs]
-SQLAlchemy
-loguru
-sqlparse
-nltk

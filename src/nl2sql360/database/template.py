@@ -1,0 +1,27 @@
+
+METRIC_COL_MAPPING = {
+    "ex": "exec_acc",
+    "em": "exact_acc",
+    "ves": "ves",
+    "qvt": None
+}
+
+
+QUERY_OVERALL_PERFORMANCE = \
+"""
+SELECT AVG({METRIC_COL}) * 100 from DATASET_{DATASET_NAME}_EVALUATION_{EVAL_NAME} AS e JOIN DATASET_{DATASET_NAME} AS d ON e.id = d.id;
+"""
+
+
+QUERY_SUBSET_PERFORMANCE = \
+"""
+SELECT AVG({METRIC_COL}) * 100 from DATASET_{DATASET_NAME}_EVALUATION_{EVAL_NAME} AS e JOIN DATASET_{DATASET_NAME} AS d ON e.id = d.id WHERE {WHERE_CONDITION};
+"""
+
+
+QUERY_QVT_PERFORMANCE = \
+"""
+SELECT AVG(exec_acc) * 100 FROM (
+    SELECT AVG(exec_acc) as exec_acc FROM DATASET_{DATASET_NAME}_EVALUATION_{EVAL_NAME} AS e DATASET_{DATASET_NAME} AS d ON e.id = d.id GROUP BY gold HAVING COUNT(d.gold) >= 2 and sum(e.exec_acc) != 0
+);
+"""

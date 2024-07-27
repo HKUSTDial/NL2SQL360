@@ -1,0 +1,2 @@
+[console_scripts]
+nl2sql360-cli = nl2sql360.cli:main
