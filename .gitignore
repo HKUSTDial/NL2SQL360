@@ -2,4 +2,5 @@
 **/exp
 **/.vscode
 **/__pycache__
+**/dist
 **/build
