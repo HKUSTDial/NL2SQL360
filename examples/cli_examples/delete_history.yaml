@@ -1,0 +1,8 @@
+# Core Arguments
+core_dir: "data"
+core_name: "nl2sql360"
+sql_dialect: "sqlite"
+
+# Delete History Arguments
+delete_dataset: "spider_dev"
+delete_dataset_evaluations: True

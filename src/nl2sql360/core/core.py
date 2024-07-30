@@ -454,9 +454,10 @@ class Core(_Core):
                 for stat in statements:
                     connection.execute(text(stat))
                 connection.commit()
+            logger.success(f"Delete dataset `{dataset_name}` successfully.")
             return
     
-    def delete_evaluation_history(self, dataset_name, eval_name) -> DataFrame:
+    def delete_evaluation_history(self, dataset_name: str, eval_name: str) -> None:
         logger.warning(
             "You are deleting the evaluation history. Please enter `Y` / `YES` to confirm or enter `N` / `NO` to cancel the operation. "
         )
@@ -475,4 +476,5 @@ class Core(_Core):
             with self.engine.connect() as connection:
                 connection.execute(text(statement))
                 connection.commit()
+            logger.success(f"Delete evaluation `{eval_name}` for dataset `{dataset_name}` successfully.")
             return

@@ -1,9 +1,7 @@
-import os
-import random
-import subprocess
 import sys
 from enum import Enum, unique
-from . import VERSION
+from .. import VERSION
+from .util import run_dataset_import, run_delete_history, run_evaluation, run_report
 
 
 USAGE = (
@@ -47,13 +45,13 @@ class Command(str, Enum):
 def main():
     command = sys.argv.pop(1) if len(sys.argv) != 1 else Command.HELP
     if command == Command.DATASET:
-        pass
+        run_dataset_import()
     elif command == Command.EVALUATE:
-        pass
+        run_evaluation()
     elif command == Command.REPORT:
-        pass
+        run_report()
     elif command == Command.DELETE:
-        pass
+        run_delete_history()
     elif command == Command.VERSION:
         print(WELCOME)
     elif command == Command.HELP:

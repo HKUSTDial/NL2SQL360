@@ -1,0 +1,14 @@
+# Core Arguments
+core_dir: "data"
+core_name: "nl2sql360"
+sql_dialect: "sqlite"
+
+# Evaluation Arguments
+eval_name: "SuperSQL"
+eval_dataset: "spider_dev"
+eval_metrics:
+  - "ex"
+  - "em"
+  - "ves"
+pred_sqls_file: "tests/SuperSQL.sql"
+enable_spider_eval: True

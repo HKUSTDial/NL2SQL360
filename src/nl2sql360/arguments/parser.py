@@ -7,12 +7,18 @@ from .hf_argparser import HfArgumentParser
 from .core_args import CoreArguments
 from .dataset_args import DatasetArguments
 from .evaluation_args import EvaluationArguments
+from .report_args import ReportArguments
+from .delete_history_args import DeleteHistoryArguments
 
 
-_DATASET_CONSTRUCTION_ARGS = [CoreArguments, DatasetArguments]
-_DATASET_CONSTRUCTION_CLS = Tuple[CoreArguments, DatasetArguments]
+_DATASET_IMPORT_ARGS = [CoreArguments, DatasetArguments]
+_DATASET_IMPORT_CLS = Tuple[CoreArguments, DatasetArguments]
 _EVALUATION_ARGS = [CoreArguments, EvaluationArguments]
 _EVALUATION_CLS = Tuple[CoreArguments, EvaluationArguments]
+_REPORT_ARGS = [CoreArguments, ReportArguments]
+_REPORT_CLS = Tuple[CoreArguments, ReportArguments]
+_DELETE_HISTORY_ARGS = [CoreArguments, DeleteHistoryArguments]
+_DELETE_HISTORY_CLS = Tuple[CoreArguments, DeleteHistoryArguments]
 
 
 def _parse_args(parser: "HfArgumentParser", args: Optional[Dict[str, Any]] = None) -> Tuple[Any]:
@@ -32,11 +38,21 @@ def _parse_args(parser: "HfArgumentParser", args: Optional[Dict[str, Any]] = Non
     return (*parsed_args,)
 
 
-def get_dataset_construction_args(args: Optional[Dict[str, Any]] = None) -> _DATASET_CONSTRUCTION_CLS:
-    parser = HfArgumentParser(_DATASET_CONSTRUCTION_ARGS)
+def get_dataset_import_args(args: Optional[Dict[str, Any]] = None) -> _DATASET_IMPORT_CLS:
+    parser = HfArgumentParser(_DATASET_IMPORT_ARGS)
     return _parse_args(parser, args)
 
 
 def get_evaluation_args(args: Optional[Dict[str, Any]] = None) -> _EVALUATION_CLS:
     parser = HfArgumentParser(_EVALUATION_ARGS)
+    return _parse_args(parser, args)
+
+
+def get_report_args(args: Optional[Dict[str, Any]] = None) -> _REPORT_CLS:
+    parser = HfArgumentParser(_REPORT_ARGS)
+    return _parse_args(parser, args)
+
+
+def get_delete_history_args(args: Optional[Dict[str, Any]] = None) -> _DELETE_HISTORY_CLS:
+    parser = HfArgumentParser(_DELETE_HISTORY_ARGS)
     return _parse_args(parser, args)

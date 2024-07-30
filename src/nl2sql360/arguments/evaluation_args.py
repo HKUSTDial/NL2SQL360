@@ -1,6 +1,6 @@
 from dataclasses import dataclass, field
 from pathlib import Path
-from typing import Optional, Literal
+from typing import Optional, Literal, List
 
 
 @dataclass
@@ -17,7 +17,7 @@ class EvaluationArguments:
         metadata={"help": "The dataset name for evaluation."}
     )
     
-    eval_metrics: str = field(
+    eval_metrics: List[str] = field(
         metadata={"help": "Specify metrics (`ex`, `em`, `ves`) for evaluation."}
     )
     
@@ -42,7 +42,6 @@ class EvaluationArguments:
     
     def __post_init__(self):
         
-        self.eval_metrics = set([item.strip() for item in self.eval_metrics.split(",")])
         for metric in self.eval_metrics:
             if metric not in ["ex", "em", "ves"]:
                 raise ValueError("`eval_metrics` only supports metrics combinations in (`ex`, `em`, `ves`).")

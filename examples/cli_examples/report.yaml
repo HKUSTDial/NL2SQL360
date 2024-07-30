@@ -1,0 +1,25 @@
+# Core Arguments
+core_dir: "data"
+core_name: "nl2sql360"
+sql_dialect: "sqlite"
+
+
+# Report Arguments
+report_dataset: "spider_dev"
+report_evaluation:
+  - "SuperSQL"
+metric:
+  - "ex"
+  - "em"
+filter:
+  - 
+    name: "Subquery"
+    expression: "SUBQUERY > 0"
+  -
+    name: "Join"
+    expression: "JOIN > 0"
+scenario:
+  -
+    name: "BI"
+    expression: "SUBQUERY > 0 && JOIN > 0"
+save_path: "./report.csv"

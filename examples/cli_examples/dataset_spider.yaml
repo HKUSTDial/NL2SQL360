@@ -8,9 +8,9 @@ dataset_name: "spider_dev"
 dataset_dir: "data/spider"
 samples_file: "dev.json"
 tables_file: "tables.json"
-database_dir: "databases"
+database_dir: "database"
 question_key: "question"
 sql_key: "query"
 db_id_key: "db_id"
-sql_complexity_key: None
-database_domain_file: None
+sql_complexity_key: null
+database_domain_file: null

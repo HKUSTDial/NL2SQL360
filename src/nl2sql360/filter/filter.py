@@ -68,8 +68,8 @@ def parse_filter(filter_name: str, filter_expression: str) -> Optional[Filter]:
 def parse_scenario(scenario_name: str, scenario_str: str) -> Optional[Scenario]:
     filter_expressions = scenario_str.split(_SCENARIO_CONNECTOR)
     filters = []
-    for exp in filter_expressions:
-        filter = parse_filter(exp.strip())
+    for idx, exp in enumerate(filter_expressions):
+        filter = parse_filter(filter_name=f"{scenario_name}-Filter-{idx}", filter_expression=exp.strip())
         if filter is None:
             return None
         else:
