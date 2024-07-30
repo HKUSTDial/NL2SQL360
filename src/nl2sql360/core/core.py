@@ -3,24 +3,13 @@ from sqlalchemy.orm import Session
 from loguru import logger
 from tqdm import tqdm
 from pathlib import Path
-from typing import Sequence, Optional, List, Dict
+from typing import Sequence, Optional, List, Dict, Tuple, Union
 from pathlib import Path
 from pandas import DataFrame
 import pandas as pd
+import itertools
 
-
-from ..database import (Base,
-                        DatasetInfo,
-                        get_dataset_model,
-                        get_evaluation_model,
-                        get_dataset_name_from_table_name,
-                        get_dataset_name_and_evaluation_name_from_table_name,
-                        get_dataset_info,
-                        get_dataset_samples,
-                        METRIC_COL_MAPPING,
-                        QUERY_OVERALL_PERFORMANCE,
-                        QUERY_QVT_PERFORMANCE,
-                        QUERY_SUBSET_PERFORMANCE)
+from ..database import *
 from ..parser import SQLParser
 from ..dataset import NL2SQLDataset
 from ..arguments import CoreArguments, DatasetArguments, EvaluationArguments
@@ -64,8 +53,8 @@ class _Core:
             # Insert dataset info
             dataset_info_item = DatasetInfo(
                 dataset_name=dataset_args.dataset_name,
-                database_dir_path=str(Path(dataset_args.dataset_dir, dataset_args.database_dir).absolute()),
-                tables_json_path=str(Path(dataset_args.dataset_dir, dataset_args.tables_file)) if dataset_args.tables_file else None
+                database_dir_path=str(Path(dataset_args.dataset_dir, dataset_args.database_dir).resolve()),
+                tables_json_path=str(Path(dataset_args.dataset_dir, dataset_args.tables_file).resolve()) if dataset_args.tables_file else None
             )
             session.add(dataset_info_item)
             
@@ -239,7 +228,7 @@ class Core(_Core):
                 return DataFrame(data={"Evaluation": eval_name, metric.upper(): res}).round(decimals=2)
             else:
                 logger.warning("Query an empty result.")
-                return DataFrame(columns=[metric])
+                return DataFrame(data={"Evaluation": eval_name, metric.upper(): pd.NA})
     
     def query_overall_leaderboard(self, dataset_name: str, metric: str, eval_names: List[str] = None) -> DataFrame:
         if not (self._check_dataset_valid(dataset_name) and self._check_metric_valid(metric)):
@@ -255,9 +244,10 @@ class Core(_Core):
         for eval_name in eval_names:
             dataframes.append(self.query_overall_performance(dataset_name, metric, eval_name))
         df = pd.concat(dataframes, ignore_index=True).sort_values(by=[metric.upper(), "Evaluation"], ascending=False)
+        df["Rank"] = df[f"{metric.upper()}"].rank(axis=0, method="dense", ascending=False)
         return df
 
-    def query_subset_performance(self, dataset_name: str, filter: Filter, metric: str, eval_name: str) -> DataFrame:
+    def query_filter_performance(self, dataset_name: str, filter: Filter, metric: str, eval_name: str) -> DataFrame:
         if not (self._check_dataset_valid(dataset_name) and self._check_evaluation_valid(dataset_name, eval_name) and self._check_metric_valid(metric)):
             return None
         
@@ -276,12 +266,12 @@ class Core(_Core):
             connection.commit()
         res = result.first()
         if res:
-            return DataFrame(data={"Evaluation": eval_name, metric.upper(): res}).round(decimals=2)
+            return DataFrame(data={"Evaluation": eval_name, "Subset": filter.name, metric.upper(): res}).round(decimals=2)
         else:
             logger.warning("Query an empty result.")
-            return DataFrame(data={"Evaluation": eval_name, metric.upper(): pd.NA})
+            return DataFrame(data={"Evaluation": eval_name, "Subset": filter.name, metric.upper(): pd.NA})
 
-    def query_subset_leaderboard(self, dataset_name: str, filter: Filter, metric: str, eval_names: List[str] = None) -> DataFrame:
+    def query_filter_leaderboard(self, dataset_name: str, filter: Filter, metric: str, eval_names: List[str] = None) -> DataFrame:
         if not (self._check_dataset_valid(dataset_name) and self._check_metric_valid(metric)):
             return None
         
@@ -293,25 +283,196 @@ class Core(_Core):
             eval_names = self.query_available_evaluations(dataset_name)["Evaluation"].values
         dataframes = []
         for eval_name in eval_names:
-            dataframes.append(self.query_subset_performance(dataset_name, filter, metric, eval_name))
-        df = pd.concat(dataframes, ignore_index=True).sort_values(by=[metric.upper(), "Evaluation"], ascending=False)
+            dataframes.append(self.query_filter_performance(dataset_name, filter, metric, eval_name))
+        df = pd.concat(dataframes, ignore_index=True).sort_values(by=[metric.upper(), "Evaluation"], ascending=False, ignore_index=True)
+        df["Rank"] = df[f"{metric.upper()}"].rank(axis=0, method="dense", ascending=False)
         return df
     
-    def query_scenario_performance(self, dataset_name, scenario, metric, eval_name) -> DataFrame:
-        pass
+    def query_scenario_performance(self, dataset_name: str, scenario: Scenario, metric: str, eval_name: str) -> DataFrame:
+        if not (self._check_dataset_valid(dataset_name) and self._check_evaluation_valid(dataset_name, eval_name) and self._check_metric_valid(metric)):
+            return None
+        
+        if metric == "qvt":
+            logger.warning(f"QVT metric only supports overall performance.")
+            return None
+        
+        statetment = QUERY_SUBSET_PERFORMANCE.format(
+            DATASET_NAME=dataset_name,
+            EVAL_NAME=eval_name,
+            METRIC_COL=METRIC_COL_MAPPING[metric],
+            WHERE_CONDITION=serialize_scenario(scenario)
+        )
+        with self.engine.connect() as connection:
+            result = connection.execute(text(statetment))
+            connection.commit()
+        res = result.first()
+        if res:
+            return DataFrame(data={"Evaluation": eval_name, "Subset": scenario.name, metric.upper(): res}).round(decimals=2)
+        else:
+            logger.warning("Query an empty result.")
+            return DataFrame(data={"Evaluation": eval_name, "Subset": scenario.name, metric.upper(): pd.NA})
     
     def query_scenario_leaderboard(self, dataset_name, scenario, metric, eval_names: List[str] = None) -> DataFrame:
-        pass
+        if not (self._check_dataset_valid(dataset_name) and self._check_metric_valid(metric)):
+            return None
+        
+        if eval_names:
+            for eval_name in eval_names:
+                if not self._check_evaluation_valid(dataset_name, eval_name):
+                    return None
+        else:
+            eval_names = self.query_available_evaluations(dataset_name)["Evaluation"].values
+        dataframes = []
+        for eval_name in eval_names:
+            dataframes.append(self.query_scenario_performance(dataset_name, scenario, metric, eval_name))
+        df = pd.concat(dataframes, ignore_index=True).sort_values(by=[metric.upper(), "Evaluation"], ascending=False, ignore_index=True)
+        df["Rank"] = df[f"{metric.upper()}"].rank(axis=0, method="dense", ascending=False)
+        return df
     
-    def generate_dataset_report(self, dataset_name) -> DataFrame:
-        pass
+    def query_dataset_sql_distribution(self, dataset_name: str) -> DataFrame:
+        if not self._check_dataset_valid(dataset_name):
+            return None
+        else:
+            statetment = QUERY_DATASET_SIZE.format(DATASET_NAME=dataset_name)
+            with self.engine.connect() as connection:
+                result = connection.execute(text(statetment))
+                connection.commit()
+            total_count, unique_sqls_count = result.first()
+            
+            statetment = QUERY_DATASET_SQL_KEYWORDS_DISTRIBUTION.format(DATASET_NAME=dataset_name)
+            with self.engine.connect() as connection:
+                result = connection.execute(text(statetment))
+                connection.commit()
+            (avg_count_query_fields,
+             avg_count_group_by, 
+             avg_count_order_by, 
+             avg_count_limit, 
+             avg_count_join, 
+             avg_count_predicate, 
+             avg_count_aggregation, 
+             avg_count_scalar_function, 
+             avg_count_subquery, 
+             avg_count_set_operation, 
+             avg_count_math_compute, 
+             avg_count_logical_connecter, 
+             avg_count_distinct, 
+             avg_count_like, 
+             avg_count_control_flow, 
+             avg_count_window) = result.first()
+            
+            df = DataFrame(data=[
+                {"Metric": "Total Count", "Value": total_count},
+                {"Metric": "Unique SQL Count", "Value": unique_sqls_count},
+                {"Metric": "[QUERY FIELDS] / SQL", "Value": avg_count_query_fields},
+                {"Metric": "[GROUP BY] / SQL", "Value": avg_count_group_by},
+                {"Metric": "[ORDER BY] / SQL", "Value": avg_count_order_by},
+                {"Metric": "[LIMIT] / SQL", "Value": avg_count_limit},
+                {"Metric": "[JOIN] / SQL", "Value": avg_count_join},
+                {"Metric": "[PREDICATE] / SQL", "Value": avg_count_predicate},
+                {"Metric": "[AGGREGATION] / SQL", "Value": avg_count_aggregation},
+                {"Metric": "[SCALAR FUNCTION] / SQL", "Value": avg_count_scalar_function},
+                {"Metric": "[SUBQUERY] / SQL", "Value": avg_count_subquery},
+                {"Metric": "[SET OPERATION] / SQL", "Value": avg_count_set_operation},
+                {"Metric": "[MATH COMPUTE] / SQL", "Value": avg_count_math_compute},
+                {"Metric": "[LOGICAL CONNECTOR] / SQL", "Value": avg_count_logical_connecter},
+                {"Metric": "[DISTINCT] / SQL", "Value": avg_count_distinct},
+                {"Metric": "[LIKE] / SQL", "Value": avg_count_like},
+                {"Metric": "[CONTROL FLOW] / SQL", "Value": avg_count_control_flow},
+                {"Metric": "[WINDOW] / SQL", "Value": avg_count_window},
+            ]).round(decimals=2)
+            
+            return df
     
-    def generate_evaluation_report(self, dataset_name, filters, scenarios, metrics, eval_names: List[str] = None) -> DataFrame:
-        pass
+    def query_dataset_domain_distribution(self, dataset_name: str) -> DataFrame:
+        if not self._check_dataset_valid(dataset_name):
+            return None
+        else:
+            statetment = QUERY_DATASET_DOMAIN_DISTRIBUTION.format(DATASET_NAME=dataset_name)
+            with self.engine.connect() as connection:
+                result = connection.execute(text(statetment))
+                connection.commit()
+            db_domain_count = []
+            for res in result:
+                db_domain_count.append({"DB Domain": res[0], "Count": res[1]})
+            df = DataFrame(data=db_domain_count)
+            return df
     
-    def delete_dataset_history(self, dataset_name) -> DataFrame:
-        pass
+    def generate_evaluation_report(self, dataset_name: str, filters: List[Filter], scenarios: List[Scenario], metrics: List[str], eval_names: List[str] = None) -> DataFrame:
+        if not self._check_dataset_valid(dataset_name):
+            return None
+        for metric in metrics:
+            if not self._check_metric_valid(metric):
+                return None
+            
+        if eval_names:
+            for eval_name in eval_names:
+                if not self._check_evaluation_valid(dataset_name, eval_name):
+                    return None
+        else:
+            eval_names = self.query_available_evaluations(dataset_name)["Evaluation"].values
+            
+        results = []
+        
+        for eval_name in eval_names:
+            for filter in filters:
+                data = dict()
+                for metric in metrics:
+                    filter_df = self.query_filter_performance(dataset_name=dataset_name, filter=filter, metric=metric, eval_name=eval_name)
+                    data.update(filter_df.to_dict())
+                results.append(DataFrame(data))
+            for scenario in scenarios:
+                data = dict()
+                for metric in metrics:
+                    scenario_df = self.query_scenario_performance(dataset_name=dataset_name, scenario=scenario, metric=metric, eval_name=eval_name)
+                    data.update(scenario_df.to_dict())
+                results.append(DataFrame(data))
+        
+        df = pd.concat(results, ignore_index=True).sort_values(by=["Subset", "Evaluation"], ignore_index=True)
+        return df
+    
+    def delete_dataset_history(self, dataset_name: str, delete_relavant_evaluations=True) -> None:
+        logger.warning(
+            "You are deleting the dataset history. Please enter `Y` / `YES` to confirm or enter `N` / `NO` to cancel the operation. "
+        )
+        flag = input("Input your choice:\n").strip().upper()
+        while flag not in ["Y", "YES", "N", "NO"]:            
+            logger.warning(
+                "You are deleting the dataset history. Please enter `Y` / `YES` to confirm or enter `N` / `NO` to cancel the operation. "
+            )
+            flag = input("Input your choice:\n").strip().upper()
+        
+        if flag in ["N", "NO"]:
+            return
+        
+        if flag in ["Y", "YES"]:
+            statements = [DELETE_DATASET_TABLE.format(DATASET_NAME=dataset_name), DELETE_DATASET_INFO.format(DATASET_NAME=dataset_name)]
+            if delete_relavant_evaluations:
+                for eval_name in self.query_available_evaluations(dataset_name)["Evaluation"].values:
+                    statements.append(DELETE_EVALUATION_TABLE.format(DATASET_NAME=dataset_name, EVAL_NAME=eval_name))
+                    
+            with self.engine.connect() as connection:
+                for stat in statements:
+                    connection.execute(text(stat))
+                connection.commit()
+            return
     
     def delete_evaluation_history(self, dataset_name, eval_name) -> DataFrame:
-        pass
-    
+        logger.warning(
+            "You are deleting the evaluation history. Please enter `Y` / `YES` to confirm or enter `N` / `NO` to cancel the operation. "
+        )
+        flag = input("Input your choice:\n").strip().upper()
+        while flag not in ["Y", 'YES', "N", "NO"]:
+            logger.warning(
+                "You are deleting the dataset history. Please enter `Y` / `YES` to confirm or enter `N` / `NO` to cancel the operation. "
+            )
+            flag = input("Input your choice:\n").strip().upper()
+
+        if flag in ["N", "NO"]:
+            return
+        
+        if flag in ["Y", "YES"]:
+            statement = DELETE_EVALUATION_TABLE.format(DATASET_NAME=dataset_name, EVAL_NAME=eval_name)
+            with self.engine.connect() as connection:
+                connection.execute(text(statement))
+                connection.commit()
+            return

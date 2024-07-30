@@ -27,6 +27,8 @@ class SpiderAccraucyEvaluator:
             logger.warning(f"Spider evaluator has not been set with evaluation metrics and is defaulted to EX.")
             etype = "exec"
         
+        kmaps = None
+        
         if etype in ["all", "match"]:
             if kwds.get("tables_json_path", None) is None:
                 logger.warning(f"`EM` metric evaluation need tables json path passed in. Exclude `EM` by default.")

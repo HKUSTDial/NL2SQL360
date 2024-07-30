@@ -1,7 +1,5 @@
-**/data/dataset/**
+**/data
 **/exp
 **/.vscode
 **/__pycache__
-**/data/spider
-**/dist
 **/build

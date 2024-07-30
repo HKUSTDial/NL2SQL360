@@ -21,7 +21,7 @@ class Field(Enum):
     SCALAR_FUNCTION = "SCALAR_FUNCTION"
     SUBQUERY = "SUBQUERY"
     SET_OPERATION = "SET_OPERATION"
-    MATCH_COMPUTE = "MATCH_COMPUTE"
+    MATH_COMPUTE = "MATH_COMPUTE"
     LOGICAL_CONNECTOR = "LOGICAL_CONNECTOR"
     DISTINCT = "DISTINCT"
     LIKE = "LIKE"
@@ -31,6 +31,7 @@ class Field(Enum):
 
 @dataclass
 class Filter:
+    name: str
     field: Field
     operator: Operator
     value: int
@@ -40,10 +41,11 @@ _SCENARIO_CONNECTOR = "&&"
 
 @dataclass
 class Scenario:
+    name: str
     filters: List[Filter]
     
 
-def parse_filter(filter_expression: str) -> Optional[Filter]:
+def parse_filter(filter_name: str, filter_expression: str) -> Optional[Filter]:
     pattern = re.compile(r'^(?P<field>{})\s*(?P<op>{})\s*(?P<value>\d+)$'.format(
         '|'.join([field.value for field in Field]),
         '|'.join([op.value for op in Operator])
@@ -54,6 +56,7 @@ def parse_filter(filter_expression: str) -> Optional[Filter]:
         op = match.group('op')
         value = match.group('value')
         return Filter(
+            name=filter_name,
             field=Field(field),
             operator=Operator(op),
             value=int(value)
@@ -62,7 +65,7 @@ def parse_filter(filter_expression: str) -> Optional[Filter]:
         return None
 
 
-def parse_scenario(scenario_str: str) -> Optional[Scenario]:
+def parse_scenario(scenario_name: str, scenario_str: str) -> Optional[Scenario]:
     filter_expressions = scenario_str.split(_SCENARIO_CONNECTOR)
     filters = []
     for exp in filter_expressions:
@@ -71,7 +74,7 @@ def parse_scenario(scenario_str: str) -> Optional[Scenario]:
             return None
         else:
             filters.append(filter)
-    return Scenario(filters=filters)
+    return Scenario(name=scenario_name, filters=filters)
 
 
 def map_field_to_database_col(field: Field) -> str:
@@ -84,10 +87,3 @@ def serialize_filter(filter: Filter) -> str:
 
 def serialize_scenario(scenario: Scenario) -> str:
     return " AND ".join([serialize_filter(filter) for filter in scenario.filters])
-    
-
-if __name__ == "__main__":
-    filter_exp = "SUBQUERY > 3"
-    print(parse_filter(filter_exp))
-    scenario_exp = "SUBQUERY > 3 && JOIN < 2"
-    print(parse_scenario(scenario_exp))

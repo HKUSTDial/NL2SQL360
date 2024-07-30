@@ -23,7 +23,7 @@ class VesEvaluator:
             exec_acc_list=exec_acc_list
         )
         ves_result = sort_results(ves_result)
-        ves_result = [math.sqrt(res['time_ratio']) * 100 for res in ves_result]
+        ves_result = [math.sqrt(res['time_ratio']) for res in ves_result]
         return {
             "ves": ves_result
         }
