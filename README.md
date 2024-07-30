@@ -9,7 +9,7 @@
 In addition, we propose **SuperSQL**, which achieves competitive performance with execution accuracy of **87%** and **62.66%** on the Spider and BIRD test sets, respectively.
 
 ## :tada:News
-[24/7/30] We have refactored the code for **NL2SQL360** in [`refactor`](https://github.com/BugMaker-Boyan/NL2SQL360/tree/refactor) branch and released the official [Python Package]([nl2sql360 · PyPI](https://pypi.org/project/nl2sql360)). **Stay tuned for the complete documents!**
+[24/7/30] We have refactored the code for **NL2SQL360** in [`refactor`](https://github.com/BugMaker-Boyan/NL2SQL360/tree/refactor) branch and released the official python package([nl2sql360 · PyPI](https://pypi.org/project/nl2sql360)). **Stay tuned for the complete documents!**
 
 [24/6/30] Our paper [The Dawn of Natural Language to SQL: Are We Fully Ready?](https://arxiv.org/abs/2406.01265) has been accepted by VLDB'24.
 
