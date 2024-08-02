@@ -1,0 +1,48 @@
+# ---------------- Core Arguments ----------------
+
+# The directory to save NL2SQL360 core data.
+core_dir: "data"
+
+# The NL2SQL360 core name, such that NL2SQL360 core data is saved to "core_dir/core_name.sqlite".
+core_name: "nl2sql360"
+
+# The dataset SQL dialect, "sqlite" by default.
+sql_dialect: "sqlite"
+
+# ---------------- Report Arguments ----------------
+
+# The dataset name which has been imported in NL2SQL360.
+report_dataset: "spider_dev"
+
+# The evaluation(s) name to report, listing each name in the following:
+report_evaluation:
+  - "SuperSQL"
+
+# The metric(s) name to report, including "ex", "em", "ves", "qvt". List each name in the following:
+metric:
+  - "ex"
+  - "em"
+
+# Define subset(s) performance by filter(s). List each filter defination in the following.
+# Filter:
+#   "name": The name for the filtered subset to show.
+#   "expression": The filter expression in format "{FILTER_KEY} {<, >, =} {NUMBER}".
+#                 Valid {FILTER_KEY} is listed in 
+#                 https://github.com/BugMaker-Boyan/NL2SQL360/blob/fe436d43031e06cd457e44ec98fd25a5acd25c2b/src/nl2sql360/filter/filter.py#L13
+filter:
+  - 
+    name: "Subquery"
+    expression: "SUBQUERY > 0"
+  -
+    name: "Join"
+    expression: "JOIN > 0"
+
+# Define scenario(s) performance. List each scenario defination in the following.
+# Scenario: Combination of multiple filters joined by "&&".
+scenario:
+  -
+    name: "BI"
+    expression: "SUBQUERY > 0 && JOIN > 0"
+
+# The report save path in CSV format
+save_path: "./report.csv"

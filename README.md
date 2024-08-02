@@ -2,8 +2,6 @@
 
 <div align="center"><img width="25%" src="./assets/nl2sql360.png"><img width="75%" src="./assets/leaderboard.png"></div>
 
-
-
 ## :dizzy:Overview
 
 **NL2SQL360** is a testbed for fine-grained evaluation of NL2SQL solutions. Our testbed integrates existing NL2SQL benchmarks, a repository of NL2SQL models, and various evaluation metrics, which aims to provide an intuitive and user-friendly platform to enable both standard and customized performance evaluations. Users can utilize **NL2SQL360** to assess different NL2SQL methods against established benchmarks or tailor their evaluations based on specific criteria. This flexibility allows for testing solutions in specific data domains or analyzing performance on different characteristics of SQL queries. 
@@ -11,125 +9,124 @@
 In addition, we propose **SuperSQL**, which achieves competitive performance with execution accuracy of **87%** and **62.66%** on the Spider and BIRD test sets, respectively.
 
 ## :tada:News
+
+[24/8/2] We have released CLI usage / Code usage tutorials. **Please [check out](#:rocket:quick-start)!**
+
+[24/7/30] We have refactored the code and released the official python package([nl2sql360 · PyPI](https://pypi.org/project/nl2sql360)). **Stay tuned for the complete documents!**
+
 [24/6/30] Our paper [The Dawn of Natural Language to SQL: Are We Fully Ready?](https://arxiv.org/abs/2406.01265) has been accepted by VLDB'24.
 
-## :rocket:Quick start
+## :balloon:Features
 
-We publish our online Web Demo based on Streamlit. **The more powerful online Web-System will be published soon.**
+- **Easy-to-use Evaluation**: Command Line Usage / Python Code Usage.
+- **Integrated Metrics**: Execution Accuracy / Exact-Match Accuracy / Valid Efficiency Score / Question Variance Testing.
+- **Multi-angle Performance**: Fine-grained performance (JOIN, Sub-query, etc.) / Scenario-based (Business Intelligence, etc.)
 
-Web demo: [Streamlit (hypersql.streamlit.app)](https://hypersql.streamlit.app/)
+## :wrench:Installation
 
-## :zap:Environment Setup
-
-Create a virtual anaconda environment:
-
-```
-conda create -n nlsql360 python=3.9
+```bash
+pip install nl2sql360
 ```
 
-Active it and install the requirements:
+## :rocket:Quick Start
 
-```
-pip install -r requirements.txt
-python -c "import nltk;nltk.download('punkt')" 
-```
+<details><summary>Prepare Dataset</summary>
 
-## :floppy_disk:Data Preparation
-
-You need to download specific dataset and unzip to the folder `./data/dataset/{DATASET}`. For example, you can download and unzip the [Spider](https://yale-lily.github.io/spider) to the folder `./data/dataset/spider`.
-
-## :bulb:Evaluation With Only 3 Steps
-
-##### 1. Create Dataset (e.g. Spider):
-
-Note that, the evaluation results will be in the local SQLite Database (**"data/storage/nl2sql360.sqlite"**).
-
-```python
- from engine.engine import Engine
-from dataset.dataset_builder import SpiderDataset
-import os
-
-db_url = "sqlite:///data/storage/nl2sql360.sqlite"
-engine = Engine(db_url)
-
-spider_dataset = SpiderDataset("data/dataset")
-engine.create_dataset_table(spider_dataset, "dev")
-raw_data = spider_dataset.get_raw_data("dev")
-engine.insert_dataset_table(spider_dataset, "dev", raw_data)
+Download NL2SQL dataset to `DATASET_DIR_PATH`. The directory structure should be like:
+```bash
+DATASET_DIR_PATH:
+├─database
+│  ├─academic
+│  │  ├─academic.sqlite
+│  ├─college
+│  │  ├─college.sqlite
+├─dev.json
+├─tables.json
 ```
 
-##### 2. Automatic Evaluation with Specific Model Predicted SQLs File (e.g. `data/predict/spider_dev/DAILSQL_SC.sql`):
+- `database` directory contains multiple subdirectories, which include the corresponding `sqlite` database file.
+- `dev.json` is the samples file in JSON format, which at least contains three keys for `NL Question`, `Gold SQL`, `Databae Id`. You can also add the key for `Sample Complexity` for categorizing samples into different difficulty levels.
+- `tables.json` contains all database schema, following [Spider Preprocess Procedure](https://github.com/taoyds/spider/tree/master/preprocess). **You can also ignore this file if you do not want to evaluate Exact-Match Accuracy Metic.**
+- Note that the name for `database` directory, samples file `dev.json` and tables file `tables.json` can be changed.
 
-```python
-with open(os.path.join("data/predict/spider_dev/DAILSQL_SC.sql"), "r") as f:
-	preds = [line.strip().split("\t")[0] for line in f.readlines()]
+</details>
 
-eval_name = "DAILSQL_SC"
-engine.insert_evaluation_table(spider_dataset, "dev", eval_name, preds)
-```
+<details><summary>Import Dataset into NL2SQL360</summary>
 
-##### 3. Multi-angle and Fine-grained Evaluation with Specific Scenarios:
+- CLI Usage:
 
-You can use different tools (or command lines) to access the local SQLite Database (**"data/storage/nl2sql360.sqlite"**). For example,  use SQLiteStudio Software to visualize and interact with the database:
+  - Create / Modify the YAML configuration following [NL2SQL360/examples/cli_examples/dataset_spider.yaml](https://github.com/BugMaker-Boyan/NL2SQL360/blob/refactor/examples/cli_examples/dataset_spider.yaml).
 
-![SQLiteStudio](./assets/SQLiteStudio.png)
+  - Save the YAML file to the path `DATASET_YAML_PATH`. Then run the command line:
 
-There are two categories of tables:
+    ```bash
+    nl2sql360 dataset DATASET_YAML_PATH
+    ```
 
-1. Dataset Table, e.g. `DATASET_spider_dev`, which contains all samples and analyzed characteristics (e.g. count_join).
-2. Evaluation Table, e.g. `DATASET_spider_dev_EVALUATION_DAILSQL_SC`, which contains specific model evaluation results (e.g. exec_acc).
+- Code Usage:
 
-**Use SQL query to get scenario-specific evaluation results, there are some examples below:**
+  - Create / Modify Python File following [NL2SQL360/examples/py_examples/dataset_import.py](https://github.com/BugMaker-Boyan/NL2SQL360/blob/refactor/examples/py_examples/dataset_import.py).
+  - Run the python file to import dataset.
 
-```sql
--- Get the overall EX performance of DAILSQL(SC) method in Spider-Dev dataset:
-SELECT round(avg(exec_acc), 2) AS EX FROM DATASET_spider_dev_EVALUATION_DAILSQL_SC AS e JOIN DATASET_spider_dev AS D ON e.id = d.id;
+</details>
 
--- Get the EX/EM/VES performance of DAILSQL(SC) method in Spider-Dev dataset with different hardness:
-SELECT hardness, round(avg(exec_acc), 2) AS EX, round(avg(exact_acc) * 100.0) AS EM, round(avg(ves), 2) AS VES FROM DATASET_spider_dev_EVALUATION_DAILSQL_SC AS e JOIN DATASET_spider_dev AS D ON e.id = d.id GROUP BY d.hardness;
+<details><summary>Evaluation NL2SQL Model</summary>
 
--- Get the EX performance of DAILSQL(SC) method in Spider-Dev dataset with JOIN keywords:
-SELECT round(avg(exec_acc), 2) AS EX FROM DATASET_spider_dev_EVALUATION_DAILSQL_SC AS e JOIN DATASET_spider_dev AS D ON e.id = d.id WHERE d.count_join > 0;
+- CLI Usage:
 
--- Calculate the QVT performance of DAILSQL(SC) method in Spider-Dev dataset:
-SELECT AVG(exec_acc) as exec_acc FROM (
-    SELECT AVG(exec_acc) as exec_acc FROM DATASET_spider_dev d JOIN DATASET_spider_dev_EVALUATION_DAILSQL_SC e ON d.id = e.id GROUP BY gold HAVING COUNT(d.gold) >= 2 and sum(e.exec_acc) != 0 ORDER BY d.gold
-);
-```
+  - Create / Modify the YAML configuration following [NL2SQL360/examples/cli_examples/evaluation.yaml](https://github.com/BugMaker-Boyan/NL2SQL360/blob/refactor/examples/cli_examples/evaluation.yaml).
 
-## :microscope:Experiments
+  - Save the YAML file to the path `DATASET_YAML_PATH`. Then run the command line:
 
-### Execution Accuracy vs. SQL Characteristics
+    ```bash
+    nl2sql360 evaluate DATASET_YAML_PATH
+    ```
 
-Our **NL2SQL360** supports sql query filtering based on individual sql clauses, their combinations, or user-defined conditions. We demonstrate only four representative aspects based on Spider-dev dataset. We run all methods on these four subsets of sql queries and compute the Execution Accuracy (EX) metric.
+- Code Usage:
 
-<div align="center"><img width="50%" src="./assets/Spider_Heatmap.png"><img width="50%" src="./assets/BIRD_Heatmap.png"></div>
+  - Create / Modify Python File following [NL2SQL360/examples/py_examples/evaluation.py](https://github.com/BugMaker-Boyan/NL2SQL360/blob/refactor/examples/py_examples/evaluation.py).
+  - Run the python file to evaluate the model.
 
-![sql_charac](./assets/Boxplot.png)
+</details>
 
-### Query Variance Testing
+<details><summary>Query Multi-angle Performance</summary>
 
-This set of experiments aims to evaluate the NL2SQL system’s adaptability to various natural language phrasings and structures, reflecting the diversity anticipated in practical applications. To this end, we evaluate different LLM-based and PLM-based methods on the Spider dataset. We use our proposed **Query Variance Testing (QVT)** metric for this evaluation. **There is no clear winner between LLM-based methods and PLM-based methods in QVT. Fine-tuning the model with task-specific datasets may help stabilize its performance against NL variations.**
+- CLI Usage:
 
-<div align="center"><img width="40%" src="./assets/QVT_New.png"></div>
+  - Create / Modify the YAML configuration following [NL2SQL360/examples/cli_examples/report.yaml](https://github.com/BugMaker-Boyan/NL2SQL360/blob/refactor/examples/cli_examples/report.yaml).
 
-### Database Domain Adaption
+  - Save the YAML file to the path `DATASET_YAML_PATH`. Then run the command line:
 
-In practical NL2SQL applications, scenarios typically involve domain-specific databases, like movies or sports, each with unique schema designs and terminologies. Assessing the detailed performance of methods across these domains is crucial for effective model application. In this set of experiments, we classified the 140 databases in the Spider train set and the 20 databases in the development set into 33 domains, including social and geography, among others. We measured the performance of methods across different domain subsets in the Spider development set using the Execution Accuracy (EX) metric. **Different methods exhibit varying biases towards different domains, and there is no clear winner between LLM-based and PLM-based methods. However, in-domain training data during fine-tuning process is crucial for model performance in specific domains.**
+    ```bash
+    nl2sql360 report DATASET_YAML_PATH
+    ```
 
-<div align="center"><img width="50%" src="./assets/DB_Domain_Heatmap.png"></div>
+  - The generated report will be in `save_path` specified in the YAML file.
 
-<div align="center"><img width="60%" src="./assets/DB_Domain_Boxplot.png"></div>
+- Code Usage:
+  - Create / Modify Python File following [NL2SQL360/examples/py_examples/report.py](https://github.com/BugMaker-Boyan/NL2SQL360/blob/refactor/examples/py_examples/report.py).
+  - Run the python file to generate report.
 
-### More experiments
+</details>
 
-Please refer to our paper [The Dawn of Natural Language to SQL: Are We Fully Ready?](https://arxiv.org/abs/2406.01265).
+<details><summary>Delete History Cache</summary>
 
-## :memo:Released Experiments Data
+- CLI Usage:
 
-All predicted SQLs file: [NL2SQL360/data/predict](https://github.com/BugMaker-Boyan/NL2SQL360/tree/master/data/predict)
+  - Create / Modify the YAML configuration following [NL2SQL360/examples/cli_examples/delete_history.yaml](https://github.com/BugMaker-Boyan/NL2SQL360/blob/refactor/examples/cli_examples/delete_history.yaml).
 
-SQLite Database with all evaluation results : [NL2SQL360/data/storage/nl2sql360.sqlite](https://github.com/BugMaker-Boyan/NL2SQL360/blob/master/data/storage/nl2sql360.sqlite)
+  - Save the YAML file to the path `DATASET_YAML_PATH`. Then run the command line:
+
+    ```bash
+    nl2sql360 delete DATASET_YAML_PATH
+    ```
+
+- Code Usage:
+
+  - Create / Modify Python File following [NL2SQL360/examples/py_examples/delete_history.py](https://github.com/BugMaker-Boyan/NL2SQL360/blob/refactor/examples/py_examples/delete_history.py).
+  - Run the python file to delete dataset / evaluation cache.
+
+</details>
 
 ## :dart:Road Map
 
@@ -137,7 +134,7 @@ SQLite Database with all evaluation results : [NL2SQL360/data/storage/nl2sql360.
 
 :white_check_mark:Release **NL2SQL360** experiments data.
 
-:clock10:Refactor **NL2SQL360** Web-System.
+:white_check_mark:Release **NL2SQL360** Official Python Package.
 
 ## :pushpin:Citation
 

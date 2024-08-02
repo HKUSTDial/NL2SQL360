@@ -1,0 +1,23 @@
+# ---------------- Core Arguments ----------------
+
+# The directory to save NL2SQL360 core data.
+core_dir: "data"
+
+# The NL2SQL360 core name, such that NL2SQL360 core data is saved to "core_dir/core_name.sqlite".
+core_name: "nl2sql360"
+
+# The dataset SQL dialect, "sqlite" by default.
+sql_dialect: "sqlite"
+
+# ---------------- Delete History Arguments ----------------
+
+# The dataset name to delete which has been imported in NL2SQL360, set to null if you do not want to delete dataset history.
+# Using list if there are multiple datasets to delete.
+delete_dataset: "spider_dev"
+
+# The dataset name to delete which has been imported in NL2SQL360.
+delete_dataset_evaluations: True
+
+# The evaluation name to delete which has been imported in NL2SQL360, set to null if you do not want to delete dataset history.
+# Using list if there are multiple evaluations to delete.
+delete_evaluation: null
