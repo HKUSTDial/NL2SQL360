@@ -39,7 +39,7 @@ class MetaDataset:
     count_subquery = Column(Integer, nullable=False)
     count_set_operation = Column(Integer, nullable=False)
     count_math_compute = Column(Integer, nullable=False)
-    count_logical_connecter = Column(Integer, nullable=False)
+    count_logical_connector = Column(Integer, nullable=False)
     count_distinct = Column(Integer, nullable=False)
     count_like = Column(Integer, nullable=False)
     count_control_flow = Column(Integer, nullable=False)

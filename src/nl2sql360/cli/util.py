@@ -36,13 +36,13 @@ def run_report():
 def run_delete_history():
     core_args, delete_history_args = get_delete_history_args()
     core = Core(core_args)
-    if delete_history_args.delete_dataset:
+    if delete_history_args.dataset_name and not delete_history_args.eval_name:
         core.delete_dataset_history(
-            dataset_name=delete_history_args.delete_dataset,
+            dataset_name=delete_history_args.dataset_name,
             delete_relavant_evaluations=delete_history_args.delete_dataset_evaluations
         )
-    if delete_history_args.delete_evaluation:
+    if delete_history_args.dataset_name and delete_history_args.eval_name:
         core.delete_evaluation_history(
-            dataset_name=delete_history_args.delete_dataset,
-            eval_name=delete_history_args.delete_evaluation
+            dataset_name=delete_history_args.dataset_name,
+            eval_name=delete_history_args.eval_name
         )

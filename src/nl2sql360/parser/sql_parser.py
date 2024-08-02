@@ -10,7 +10,7 @@ class SQLParser:
     
     _MATH_COMPUTE_KEYWORDS = (exp.Add, exp.Sub, exp.Mul, exp.Div, exp.Mod)
     
-    _LOGICAL_CONNECTER_KEYWORDS = (exp.And, exp.Or)
+    _LOGICAL_CONNECTOR_KEYWORDS = (exp.And, exp.Or)
     
     _CONTROL_FLOW_KEYWORDS = (exp.Case)
     _CONTROL_FLOW_KEYWORDS_ANONYMOUS_STR = ("IIF")
@@ -69,8 +69,8 @@ class SQLParser:
         return len(list(self.ast.find_all(self._MATH_COMPUTE_KEYWORDS)))
     
     @property
-    def count_logical_connecter(self):
-        return len(list(self.ast.find_all(self._LOGICAL_CONNECTER_KEYWORDS)))
+    def count_logical_connector(self):
+        return len(list(self.ast.find_all(self._LOGICAL_CONNECTOR_KEYWORDS)))
     
     @property
     def count_distinct(self):
