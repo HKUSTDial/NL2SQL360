@@ -11,13 +11,16 @@ sql_dialect: "sqlite"
 
 # ---------------- Delete History Arguments ----------------
 
+# Notes:
+# If `dataset_name` is not set to null and `eval_name` is set to null, it will delete dataset.
+# If both `dataset_name` and `eval_name` is set with values, it will delete specific evaluations on the corrsponding dataset.
+
 # The dataset name to delete which has been imported in NL2SQL360, set to null if you do not want to delete dataset history.
-# Using list if there are multiple datasets to delete.
-delete_dataset: "spider_dev"
+dataset_name: "spider_dev"
 
 # The dataset name to delete which has been imported in NL2SQL360.
 delete_dataset_evaluations: True
 
-# The evaluation name to delete which has been imported in NL2SQL360, set to null if you do not want to delete dataset history.
-# Using list if there are multiple evaluations to delete.
-delete_evaluation: null
+# The evaluation(s) to delete which has been imported in NL2SQL360, set to null if you do not want to delete evaluation history.
+# Using list with two keys
+eval_name: null
