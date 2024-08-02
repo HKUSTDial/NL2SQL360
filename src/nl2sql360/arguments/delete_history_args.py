@@ -10,21 +10,24 @@ class DeleteHistoryArguments:
     Arguments for deleting datasets and evaluations.
     """
 
-    delete_dataset: Union[str, List[str]] = field(
+    dataset_name: Optional[str] = field(
         default=None,
         metadata={"help": "The dataset (list) to delete."}
     )
     
-    delete_dataset_evaluations: bool = field(
+    delete_dataset_evaluations: Optional[bool] = field(
         default=True,
         metadata={"help": "Whether to delete relevant evaluations for dataset."}
     )
     
-    delete_evaluation: Union[str, List[str]] = field(
+    eval_name: Optional[str] = field(
         default=None,
-        metadata={"help": "The evaluation (list) to delete."}
+        metadata={"help": "The evaluation (list) to delete, each item contains two keys `dataset` and `evaluation`."}
     )
 
     def __post_init__(self):
-        if self.delete_dataset is None and self.delete_evaluation is None:
-            raise ValueError("`delete_dataset` and `delete_evaluation` cannot be empty at the same time.")
+        if self.dataset_name is None and self.eval_name is None:
+            raise ValueError("`dataset_name` and `eval_name` cannot be empty at the same time.")
+        
+        if self.dataset_name is None and self.eval_name is not None:
+            raise ValueError("Need to specify `dataset_name` for `eval_name` evaluation.")
