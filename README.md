@@ -10,7 +10,7 @@ In addition, we propose **SuperSQL**, which achieves competitive performance wit
 
 ## :tada:News
 
-[24/8/2] We have released CLI usage / Code usage tutorials. **Please [check out](#:rocket:Quick Start)!**
+[24/8/2] We have released CLI usage / Code usage tutorials. **Please [check out](#quick-start)!**
 
 [24/7/30] We have refactored the code and released the official python package([nl2sql360 · PyPI](https://pypi.org/project/nl2sql360)). **Stay tuned for the complete documents!**
 
