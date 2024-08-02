@@ -17,7 +17,7 @@ In addition, we propose **SuperSQL**, which achieves competitive performance wit
 ## :balloon:Features
 
 - **Easy-to-use Evaluation**: Command Line Usage / Python Code Usage.
-- **Multiple Metrics**: Execution Accuracy / Exact-Match Accuracy / Valid Efficiency Score / Question Variance Testing.
+- **Integrated Metrics**: Execution Accuracy / Exact-Match Accuracy / Valid Efficiency Score / Question Variance Testing.
 - **Multi-angle Performance**: Fine-grained performance (JOIN, Sub-query, etc.) / Scenario-based (Business Intelligence, etc.)
 
 ## :wrench:Installation
@@ -31,9 +31,50 @@ pip install nl2sql360
 <details><summary>Prepare Dataset</summary>
 
 Download NL2SQL dataset to `DATASET_DIR_PATH`. The directory structure should be like:
+```bash
+DATASET_DIR_PATH:
+├─database
+│  ├─academic
+│  │  ├─academic.sqlite
+│  ├─college
+│  │  ├─college.sqlite
+├─dev.json
+├─tables.json
 ```
 
-```
+- `database` directory contains multiple subdirectories, which include the corresponding `sqlite` database file.
+- `dev.json` is the samples file in JSON format, which at least contains three keys for `NL Question`, `Gold SQL`, `Databae Id`. You can also add the key for `Sample Complexity` for categorizing samples into different difficulty levels.
+- `tables.json` contains all database schema, following [Spider Preprocess Procedure](https://github.com/taoyds/spider/tree/master/preprocess). **You can also ignore this file if you do not want to evaluate Exact-Match Accuracy Metic.**
+- Note that the name for `database` directory, samples file `dev.json` and tables file `tables.json` can be changed.
+
+</details>
+
+
+
+<details><summary>Import Dataset into NL2SQL360</summary>
+
+- CLI Usage:
+
+  - Create / Modify the YAML configuration following [NL2SQL360/examples/cli_examples/dataset_spider.yaml](https://github.com/BugMaker-Boyan/NL2SQL360/blob/refactor/examples/cli_examples/dataset_spider.yaml).
+
+  - Save the YAML file to the path `DATASET_YAML_PATH`. Then run the command line:
+
+    ```bash
+    nl2sql360 dataset DATASET_YAML_PATH
+    ```
+
+- Code Usage:
+
+  - Create / Modify Python File following [NL2SQL360/examples/py_examples/dataset_import.py](https://github.com/BugMaker-Boyan/NL2SQL360/blob/refactor/examples/py_examples/dataset_import.py).
+  - Run the python file to import dataset.
+
+</details>
+
+
+
+<details><summary>Evaluation NL2SQL Model</summary>
+
+
 
 </details>
 

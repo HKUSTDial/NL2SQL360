@@ -1,16 +1,16 @@
 # Core Arguments
-core_dir: "data"
-core_name: "nl2sql360"
-sql_dialect: "sqlite"
+core_dir: "data"  # The directory to save NL2SQL360 core data
+core_name: "nl2sql360"  # The NL2SQL360 core name 
+sql_dialect: "sqlite" # The dataset SQL dialect
 
 # Dataset Arguments
-dataset_name: "spider_dev"
-dataset_dir: "data/spider"
-samples_file: "dev.json"
-tables_file: "tables.json"
-database_dir: "database"
-question_key: "question"
-sql_key: "query"
-db_id_key: "db_id"
-sql_complexity_key: null
-database_domain_file: null
+dataset_name: "spider_dev"  # The unique dataset name to import
+dataset_dir: "data/spider"  # The dataset root directory path
+samples_file: "dev.json"  # The name of samples json file
+tables_file: "tables.json"  # The name of tables json file
+database_dir: "database"  # The database directory in "dataset_dir"
+question_key: "question"  # The key name of NL question in samples json file
+sql_key: "query"  # The key name of gold sql in samples json file
+db_id_key: "db_id"  # The key name of database id in samples json file
+sql_complexity_key: null  # The key name of sql complexity in samples json file, set to null if not specified
+database_domain_file: null  # The database domain json file (mapping database id to database domain) in "dataset_dir"
