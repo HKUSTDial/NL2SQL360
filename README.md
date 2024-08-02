@@ -9,27 +9,33 @@
 In addition, we propose **SuperSQL**, which achieves competitive performance with execution accuracy of **87%** and **62.66%** on the Spider and BIRD test sets, respectively.
 
 ## :tada:News
+
 [24/7/30] We have refactored the code for **NL2SQL360** in [`refactor`](https://github.com/BugMaker-Boyan/NL2SQL360/tree/refactor) branch and released the official python package([nl2sql360 · PyPI](https://pypi.org/project/nl2sql360)). **Stay tuned for the complete documents!**
 
 [24/6/30] Our paper [The Dawn of Natural Language to SQL: Are We Fully Ready?](https://arxiv.org/abs/2406.01265) has been accepted by VLDB'24.
 
-## :rocket:Quick start
+## :balloon:Features
 
-We publish our online Web Demo based on Streamlit. **The more powerful online Web-System will be published soon.**
+- **Easy-to-use Evaluation**: Command Line Usage / Python Code Usage.
+- **Multiple Metrics**: Execution Accuracy / Exact-Match Accuracy / Valid Efficiency Score / Question Variance Testing.
+- **Multi-angle Performance**: Fine-grained performance (JOIN, Sub-query, etc.) / Scenario-based (Business Intelligence, etc.)
 
-Web demo: [Streamlit (hypersql.streamlit.app)](https://hypersql.streamlit.app/)
+## :wrench:Installation
 
-## :zap:Environment Setup
-
-Install NL2SQL360 by PyPI:
-
-```
+```bash
 pip install nl2sql360
 ```
 
-## :floppy_disk:Data Preparation
+## :rocket:Quick Start
 
-You need to download specific dataset and unzip to the folder `./data/dataset/{DATASET}`. For example, you can download and unzip the [Spider](https://yale-lily.github.io/spider) to the folder `./data/dataset/spider`.
+<details><summary>Prepare Dataset</summary>
+
+Download NL2SQL dataset to `DATASET_DIR_PATH`. The directory structure should be like:
+```
+
+```
+
+</details>
 
 ## :bulb:Documents
 
