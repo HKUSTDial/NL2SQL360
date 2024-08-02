@@ -1,4 +1,4 @@
-# -------- Core Arguments --------
+# ---------------- Core Arguments ----------------
 
 # The directory to save NL2SQL360 core data
 core_dir: "data"
@@ -9,7 +9,7 @@ core_name: "nl2sql360"
 # The dataset SQL dialect, "sqlite" by default
 sql_dialect: "sqlite"
 
-# -------- Dataset Arguments --------
+# ---------------- Dataset Arguments ----------------
  
 # The unique dataset name to import
 dataset_name: "spider_dev"

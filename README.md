@@ -10,7 +10,9 @@ In addition, we propose **SuperSQL**, which achieves competitive performance wit
 
 ## :tada:News
 
-[24/7/30] We have refactored the code for **NL2SQL360** in [`refactor`](https://github.com/BugMaker-Boyan/NL2SQL360/tree/refactor) branch and released the official python package([nl2sql360 · PyPI](https://pypi.org/project/nl2sql360)). **Stay tuned for the complete documents!**
+[24/8/2] We have released CLI usage / Code usage tutorials. **Please [check out](#Quick Start)!**
+
+[24/7/30] We have refactored the code and released the official python package([nl2sql360 · PyPI](https://pypi.org/project/nl2sql360)). **Stay tuned for the complete documents!**
 
 [24/6/30] Our paper [The Dawn of Natural Language to SQL: Are We Fully Ready?](https://arxiv.org/abs/2406.01265) has been accepted by VLDB'24.
 
@@ -49,8 +51,6 @@ DATASET_DIR_PATH:
 
 </details>
 
-
-
 <details><summary>Import Dataset into NL2SQL360</summary>
 
 - CLI Usage:
@@ -70,19 +70,63 @@ DATASET_DIR_PATH:
 
 </details>
 
-
-
 <details><summary>Evaluation NL2SQL Model</summary>
 
 - CLI Usage:
-  - Create / Modify the YAML configuration following [NL2SQL360/examples/cli_examples/dataset_spider.yaml](https://github.com/BugMaker-Boyan/NL2SQL360/blob/refactor/examples/cli_examples/dataset_spider.yaml).
+
+  - Create / Modify the YAML configuration following [NL2SQL360/examples/cli_examples/evaluation.yaml](https://github.com/BugMaker-Boyan/NL2SQL360/blob/refactor/examples/cli_examples/evaluation.yaml).
+
+  - Save the YAML file to the path `DATASET_YAML_PATH`. Then run the command line:
+
+    ```bash
+    nl2sql360 evaluate DATASET_YAML_PATH
+    ```
+
 - Code Usage:
+
+  - Create / Modify Python File following [NL2SQL360/examples/py_examples/evaluation.py](https://github.com/BugMaker-Boyan/NL2SQL360/blob/refactor/examples/py_examples/evaluation.py).
+  - Run the python file to evaluate the model.
 
 </details>
 
-## :bulb:Documents
+<details><summary>Query Multi-angle Performance</summary>
 
-**Stay Tuned!**
+- CLI Usage:
+
+  - Create / Modify the YAML configuration following [NL2SQL360/examples/cli_examples/report.yaml](https://github.com/BugMaker-Boyan/NL2SQL360/blob/refactor/examples/cli_examples/report.yaml).
+
+  - Save the YAML file to the path `DATASET_YAML_PATH`. Then run the command line:
+
+    ```bash
+    nl2sql360 report DATASET_YAML_PATH
+    ```
+
+  - The generated report will be in `save_path` specified in the YAML file.
+
+- Code Usage:
+  - Create / Modify Python File following [NL2SQL360/examples/py_examples/report.py](https://github.com/BugMaker-Boyan/NL2SQL360/blob/refactor/examples/py_examples/report.py).
+  - Run the python file to generate report.
+
+</details>
+
+<details><summary>Delete History Cache</summary>
+
+- CLI Usage:
+
+  - Create / Modify the YAML configuration following [NL2SQL360/examples/cli_examples/delete_history.yaml](https://github.com/BugMaker-Boyan/NL2SQL360/blob/refactor/examples/cli_examples/delete_history.yaml).
+
+  - Save the YAML file to the path `DATASET_YAML_PATH`. Then run the command line:
+
+    ```bash
+    nl2sql360 delete DATASET_YAML_PATH
+    ```
+
+- Code Usage:
+
+  - Create / Modify Python File following [NL2SQL360/examples/py_examples/delete_history.py](https://github.com/BugMaker-Boyan/NL2SQL360/blob/refactor/examples/py_examples/delete_history.py).
+  - Run the python file to delete dataset / evaluation cache.
+
+</details>
 
 ## :dart:Road Map
 
@@ -90,7 +134,7 @@ DATASET_DIR_PATH:
 
 :white_check_mark:Release **NL2SQL360** experiments data.
 
-:clock10:Release **NL2SQL360** Documents.
+:white_check_mark:Release **NL2SQL360** Official Python Package.
 
 ## :pushpin:Citation
 
