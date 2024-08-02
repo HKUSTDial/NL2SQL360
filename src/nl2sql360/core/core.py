@@ -414,12 +414,26 @@ class Core(_Core):
         results = []
         
         for eval_name in eval_names:
+            
+            # Overall performance
+            
+            data = dict()
+            for metric in metrics:
+                df = self.query_overall_performance(dataset_name=dataset_name, metric=metric, eval_name=eval_name)
+                data.update(df.to_dict())
+            results.append(DataFrame(data))
+            
+            # Filter Performance
+            
             for filter in filters:
                 data = dict()
                 for metric in metrics:
                     filter_df = self.query_filter_performance(dataset_name=dataset_name, filter=filter, metric=metric, eval_name=eval_name)
                     data.update(filter_df.to_dict())
                 results.append(DataFrame(data))
+                
+            # Scenario Performance
+            
             for scenario in scenarios:
                 data = dict()
                 for metric in metrics:
