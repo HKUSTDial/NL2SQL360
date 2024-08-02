@@ -74,7 +74,9 @@ DATASET_DIR_PATH:
 
 <details><summary>Evaluation NL2SQL Model</summary>
 
-
+- CLI Usage:
+  - Create / Modify the YAML configuration following [NL2SQL360/examples/cli_examples/dataset_spider.yaml](https://github.com/BugMaker-Boyan/NL2SQL360/blob/refactor/examples/cli_examples/dataset_spider.yaml).
+- Code Usage:
 
 </details>
 
