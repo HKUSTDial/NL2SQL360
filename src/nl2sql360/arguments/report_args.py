@@ -48,23 +48,25 @@ class ReportArguments:
                 raise ValueError("`eval_metrics` only supports metrics combinations in (`ex`, `em`, `ves`).")
             
         filter_list = []
-        try:
-            for _f in self.filter:
-                f = parse_filter(_f["name"], _f["expression"])
-                if f is None:
-                    raise ValueError(f"Parse filter error: {_f}")
-                filter_list.append(f)
-        except Exception as e:
-            raise ValueError("Parse filter error.")
+        if self.filter:
+            try:
+                for _f in self.filter:
+                    f = parse_filter(_f["name"], _f["expression"])
+                    if f is None:
+                        raise ValueError(f"Parse filter error: {_f}")
+                    filter_list.append(f)
+            except Exception as e:
+                raise ValueError("Parse filter error.")
         self.filter = filter_list
         
         scenario_list = []
-        try:
-            for _s in self.scenario:
-                s = parse_scenario(_s["name"], _s["expression"])
-                if s is None:
-                    raise ValueError(f"Parse scenario error: {_s}")
-                scenario_list.append(s)
-        except Exception as e:
-            raise ValueError("Parse scenario error.")
+        if self.scenario:
+            try:
+                for _s in self.scenario:
+                    s = parse_scenario(_s["name"], _s["expression"])
+                    if s is None:
+                        raise ValueError(f"Parse scenario error: {_s}")
+                    scenario_list.append(s)
+            except Exception as e:
+                raise ValueError("Parse scenario error.")
         self.scenario = scenario_list
