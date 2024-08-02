@@ -417,7 +417,7 @@ class Core(_Core):
             
             # Overall performance
             
-            data = dict()
+            data = {"Subset": "Overall"}
             for metric in metrics:
                 df = self.query_overall_performance(dataset_name=dataset_name, metric=metric, eval_name=eval_name)
                 data.update(df.to_dict())
