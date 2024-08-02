@@ -14,7 +14,8 @@ sql_dialect: "sqlite"
 # The dataset name which has been imported in NL2SQL360.
 report_dataset: "spider_dev"
 
-# The evaluation(s) name to report, listing each name in the following:
+# The evaluation(s) name to report, listing each name in the following.
+# Set to null if you want to report all history evaluations.
 report_evaluation:
   - "SuperSQL"
 

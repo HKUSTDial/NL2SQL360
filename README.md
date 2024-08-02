@@ -136,6 +136,12 @@ DATASET_DIR_PATH:
 
 :white_check_mark:Release **NL2SQL360** Official Python Package.
 
+## :floppy_disk:Experiment Data
+
+We have released all experiment data used in our paper.
+
+[Download Link](https://drive.google.com/drive/folders/1SDwY30H2r6XNYeS53wcZNocVFm0hVgpz?usp=sharing)
+
 ## :pushpin:Citation
 
 ```
