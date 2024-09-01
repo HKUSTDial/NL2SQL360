@@ -1,0 +1,9 @@
+psycopg2-binary
+pymysql
+func-timeout
+pydantic
+sqlglot[rs]
+tqdm
+loguru
+sqlalchemy
+pandas
