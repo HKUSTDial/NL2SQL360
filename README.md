@@ -10,7 +10,7 @@ In addition, we propose **SuperSQL**, which achieves competitive performance wit
 
 ## :tada:News
 
-[24/9/1] We have released our [Homepage & Leaderboard](https://nl2sql360.github.io)!**
+[24/9/1] We have released our **[Homepage & Leaderboard](https://nl2sql360.github.io)!**
 
 [24/8/2] We have released CLI usage / Code usage tutorials. **Please [check out](#rocketquick-start)!**
 
