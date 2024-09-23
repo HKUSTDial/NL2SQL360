@@ -52,6 +52,8 @@ class MetaEvaluation:
     exec_acc = Column(Float, nullable=True, default=None)
     exact_acc = Column(Float, nullable=True, default=None)
     ves = Column(Float, nullable=True, default=None)
+    rves = Column(Float, nullable=True, default=None)
+    f1 = Column(Float, nullable=True, default=None)
 
 
 def get_dataset_model(dataset_name):

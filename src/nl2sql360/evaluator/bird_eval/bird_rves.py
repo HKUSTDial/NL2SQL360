@@ -6,7 +6,6 @@ import multiprocessing as mp
 from func_timeout import func_timeout, FunctionTimedOut
 from .evaluation_utils import (
     load_json,
-    execute_sql,
     package_sqls,
     sort_results,
     print_data,
@@ -14,10 +13,14 @@ from .evaluation_utils import (
 )
 import time
 import math
+from tqdm import tqdm
 
+exec_result = []
+progress_bar = None
 
 def result_callback(result):
     exec_result.append(result)
+    progress_bar.update()
 
 
 def clean_abnormal(input):
@@ -31,9 +34,9 @@ def clean_abnormal(input):
     return processed_list
 
 
-def execute_sql(sql, db_path, sql_dialect, return_time=False):
+def execute_sql(sql, db_path, sql_dialect, return_time=False, **kwds):
     # Connect to the database
-    conn = connect_db(sql_dialect, db_path)
+    conn = connect_db(sql_dialect, db_path, **kwds)
     start_time = time.time()
     cursor = conn.cursor()
     cursor.execute(sql)
@@ -47,20 +50,20 @@ def execute_sql(sql, db_path, sql_dialect, return_time=False):
 
 
 def iterated_execute_sql(
-    predicted_sql, ground_truth, db_path, iterate_num, sql_dialect
+    predicted_sql, ground_truth, db_path, iterate_num, sql_dialect, exec_acc, **kwds
 ):
     diff_list = []
-    predicted_res = execute_sql(predicted_sql, db_path, sql_dialect)
-    ground_truth_res = execute_sql(ground_truth, db_path, sql_dialect)
+    predicted_res = execute_sql(predicted_sql, db_path, sql_dialect, **kwds)
+    ground_truth_res = execute_sql(ground_truth, db_path, sql_dialect, **kwds)
     reward = 0
     time_ratio = 0
-    if set(predicted_res) == set(ground_truth_res):
+    if (exec_acc is None and set(predicted_res) == set(ground_truth_res)) or (exec_acc is not None and exec_acc == 1):
         for _ in range(iterate_num):
             predicted_time = execute_sql(
-                predicted_sql, db_path, sql_dialect, return_time=True
+                predicted_sql, db_path, sql_dialect, return_time=True, **kwds
             )
             ground_truth_time = execute_sql(
-                ground_truth, db_path, sql_dialect, return_time=True
+                ground_truth, db_path, sql_dialect, return_time=True, **kwds
             )
             diff_list.append(ground_truth_time / predicted_time)
         processed_diff_list = clean_abnormal(diff_list)
@@ -82,7 +85,7 @@ def iterated_execute_sql(
 
 
 def execute_model(
-    predicted_sql, ground_truth, db_place, idx, iterate_num, meta_time_out, sql_dialect
+    predicted_sql, ground_truth, db_place, idx, iterate_num, meta_time_out, sql_dialect, exec_acc, **kwds
 ):
     try:
         # you can personalize the total timeout number
@@ -91,7 +94,8 @@ def execute_model(
         reward = func_timeout(
             meta_time_out * iterate_num,
             iterated_execute_sql,
-            args=(predicted_sql, ground_truth, db_place, iterate_num, sql_dialect),
+            args=(predicted_sql, ground_truth, db_place, iterate_num, sql_dialect, exec_acc),
+            kwargs=kwds
         )
     except KeyboardInterrupt:
         sys.exit(0)
@@ -112,10 +116,16 @@ def run_sqls_parallel(
     iterate_num=100,
     meta_time_out=30.0,
     sql_dialect="SQLite",
+    exec_acc_list=None,
+    **kwds
 ):
+    global exec_result, progress_bar
+    exec_result.clear()
+    progress_bar = tqdm(total=len(sqls))
     pool = mp.Pool(processes=num_cpus)
     for i, sql_pair in enumerate(sqls):
         predicted_sql, ground_truth = sql_pair
+        exec_acc = exec_acc_list[i] if exec_acc_list else None
         pool.apply_async(
             execute_model,
             args=(
@@ -126,11 +136,14 @@ def run_sqls_parallel(
                 iterate_num,
                 meta_time_out,
                 sql_dialect,
+                exec_acc
             ),
+            kwds=kwds,
             callback=result_callback,
         )
     pool.close()
     pool.join()
+    return exec_result
 
 
 def compute_ves(exec_results):

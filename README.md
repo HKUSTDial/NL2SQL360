@@ -10,6 +10,8 @@ In addition, we propose **SuperSQL**, which achieves competitive performance wit
 
 ## :tada:News
 
+[24/9/23] We release NL2SQL360 `1.1.0` version, which supports two new metrics **Reward-based VES** (RVES), **Soft-F1 Score** (F1), from [BIRD-Mini-Dev ](https://github.com/bird-bench/mini_dev) dataset. **Please update your package with** `pip install --upgrade nl2sql360`.
+
 [24/9/1] We have released our **[Homepage & Leaderboard](https://nl2sql360.github.io)!**
 
 [24/8/2] We have released CLI usage / Code usage tutorials. **Please [check out](#rocketquick-start)!**

@@ -44,8 +44,8 @@ class ReportArguments:
             self.metric = [m.strip() for m in self.metric.split(",")]
         
         for metric in self.metric:
-            if metric not in ["ex", "em", "ves"]:
-                raise ValueError("`eval_metrics` only supports metrics combinations in (`ex`, `em`, `ves`).")
+            if metric not in ["ex", "em", "ves", "rves", "f1", "qvt"]:
+                raise ValueError("`eval_metrics` only supports metrics combinations in (`ex`, `em`, `ves`, `rves`, `f1`, `qvt`).")
             
         filter_list = []
         if self.filter:

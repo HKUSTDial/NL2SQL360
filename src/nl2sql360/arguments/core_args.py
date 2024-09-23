@@ -20,6 +20,10 @@ class CoreArguments:
     )
     
     sql_dialect: str = field(
-        default="sqlite",
+        default="SQLite",
         metadata={"help": "Specify SQL dialect (e.g., sqlite) to parse."}
     )
+    
+    def __post_init__(self):
+        if self.sql_dialect not in ["SQLite", "MySQL", "PostgreSQL"]:
+            raise ValueError("`sql_dialect` must be one of `SQLite`, `MySQL` and `PostgreSQL`.")

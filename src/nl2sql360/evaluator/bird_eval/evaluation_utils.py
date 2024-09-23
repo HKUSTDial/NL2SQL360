@@ -10,43 +10,43 @@ def load_json(dir):
     return contents
 
 
-def connect_postgresql():
+def connect_postgresql(dbname="BIRD", user="root", host="localhost", password="password", port=5432):
     # Open database connection
     # Connect to the database
     db = psycopg2.connect(
-        "dbname=BIRD user=root host=localhost password=YOUR_PASSWORD port=5432"
+        f"dbname={dbname} user={user} host={host} password={password} port={port}"
     )
     return db
 
 
-def connect_mysql():
+def connect_mysql(dbname="BIRD", user="root", host="localhost", password="password", port=3306):
     # Open database connection
     # Connect to the database"
     db = pymysql.connect(
-        host="localhost",
-        user="root",
-        password="YOUR_PASSWORD",
-        database="BIRD",
+        host=host,
+        user=user,
+        password=password,
+        database=dbname,
         unix_socket="/tmp/mysql.sock",
-        # port=3306,
+        port=port,
     )
     return db
 
 
-def connect_db(sql_dialect, db_path):
+def connect_db(sql_dialect, db_path, **kwds):
     if sql_dialect == "SQLite":
         conn = sqlite3.connect(db_path)
     elif sql_dialect == "MySQL":
-        conn = connect_mysql()
+        conn = connect_mysql(**kwds)
     elif sql_dialect == "PostgreSQL":
-        conn = connect_postgresql()
+        conn = connect_postgresql(**kwds)
     else:
         raise ValueError("Unsupported SQL dialect")
     return conn
 
 
-def execute_sql(predicted_sql, ground_truth, db_path, sql_dialect, calculate_func):
-    conn = connect_db(sql_dialect, db_path)
+def execute_sql(predicted_sql, ground_truth, db_path, sql_dialect, calculate_func, **kwds):
+    conn = connect_db(sql_dialect, db_path, **kwds)
     # Connect to the database
     cursor = conn.cursor()
     cursor.execute(predicted_sql)

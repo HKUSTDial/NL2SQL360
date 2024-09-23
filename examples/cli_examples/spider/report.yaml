@@ -6,8 +6,8 @@ core_dir: "data"
 # The NL2SQL360 core name, such that NL2SQL360 core data is saved to "core_dir/core_name.sqlite".
 core_name: "nl2sql360"
 
-# The dataset SQL dialect, "sqlite" by default.
-sql_dialect: "sqlite"
+# The dataset SQL dialect, "SQLite" by default.
+sql_dialect: "SQLite"
 
 # ---------------- Report Arguments ----------------
 
@@ -19,10 +19,14 @@ report_dataset: "spider_dev"
 report_evaluation:
   - "SuperSQL"
 
-# The metric(s) name to report, including "ex", "em", "ves", "qvt". List each name in the following:
+# The metric(s) name to report, including "ex", "em", "ves", "rves", "f1", "qvt". List each name in the following:
 metric:
-  - "ex"
   - "em"
+  - "ex"
+  - "ves"
+  - "rves"
+  - "f1"
+  - "qvt"
 
 # Define subset(s) performance by filter(s). List each filter defination in the following.
 # Filter:

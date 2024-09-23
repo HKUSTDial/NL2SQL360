@@ -1,0 +1,42 @@
+# ---------------- Core Arguments ----------------
+
+# The directory to save NL2SQL360 core data
+core_dir: "./nl2sql360_cache"
+
+# The NL2SQL360 core name, such that NL2SQL360 core data is saved to "core_dir/core_name.sqlite"
+core_name: "nl2sql360"
+
+# The dataset SQL dialect, "SQLite" by default
+sql_dialect: "SQLite"
+
+# ---------------- Dataset Arguments ----------------
+ 
+# The unique dataset name to import
+dataset_name: "bird_dev"
+
+# The dataset root directory path
+dataset_dir: "../data/bird/dev"
+
+# The name of samples json file
+samples_file: "dev.json"
+
+# The name of tables json file
+tables_file: "dev_tables.json"
+
+# The database directory in "dataset_dir"
+database_dir: "dev_databases"
+
+# The key name of NL question in samples json file
+question_key: "question"
+
+# The key name of gold sql in samples json file
+sql_key: "SQL"
+
+# The key name of database id in samples json file
+db_id_key: "db_id"
+
+# The key name of sql complexity in samples json file, set to null if not specified
+sql_complexity_key: null
+
+# The database domain json file (mapping database id to database domain) in "dataset_dir"
+database_domain_file: null

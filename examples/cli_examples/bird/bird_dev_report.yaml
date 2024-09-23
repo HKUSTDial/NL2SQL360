@@ -1,0 +1,84 @@
+# ---------------- Core Arguments ----------------
+
+# The directory to save NL2SQL360 core data.
+core_dir: "./nl2sql360_cache"
+
+# The NL2SQL360 core name, such that NL2SQL360 core data is saved to "core_dir/core_name.sqlite".
+core_name: "nl2sql360"
+
+# The dataset SQL dialect, "SQLite" by default.
+sql_dialect: "SQLite"
+
+# ---------------- Report Arguments ----------------
+
+# The dataset name which has been imported in NL2SQL360.
+report_dataset: "bird_dev"
+
+# The evaluation(s) name to report, listing each name in the following.
+# Set to `null` if you want to report all history evaluations.
+report_evaluation: null
+
+# The metric(s) name to report, including "ex", "em", "ves", "rves", "f1", "qvt". List each name in the following:
+metric:
+  - "ex"
+  - "ves"
+  - "rves"
+  - "f1"
+  - "qvt"
+
+# Define subset(s) performance by filter(s). List each filter defination in the following.
+# Filter:
+#   "name": The name for the filtered subset to show.
+#   "expression": The filter expression in format "{FILTER_KEY} {<, >, =} {NUMBER}".
+#                 Valid {FILTER_KEY} is listed in 
+#                 https://github.com/BugMaker-Boyan/NL2SQL360/blob/fe436d43031e06cd457e44ec98fd25a5acd25c2b/src/nl2sql360/filter/filter.py#L13
+filter:
+  - 
+    name: "Filter - Subquery"
+    expression: "SUBQUERY > 0"
+  -
+    name: "Filter - JOIN"
+    expression: "JOIN > 0"
+  -
+    name: "Filter - Aggregation"
+    expression: "AGGREGATION > 0"
+  -
+    name: "Filter - Scaler Function"
+    expression: "SCALAR_FUNCTION > 0"
+  -
+    name: "Filter - Set Operation"
+    expression: "SET_OPERATION > 0"
+  -
+    name: "Filter - Math Compute"
+    expression: "MATH_COMPUTE > 0"
+  -
+    name: "Filter - Logical Connector"
+    expression: "LOGICAL_CONNECTOR > 0"
+  -
+    name: "Filter - DISTINCT"
+    expression: "DISTINCT > 0"
+  -
+    name: "Filter - LIKE"
+    expression: "LIKE > 0"
+  -
+    name: "Filter - Control Flow"
+    expression: "CONTROL_FLOW > 0"
+  -
+    name: "Filter - Window Function"
+    expression: "WINDOW > 0"
+  -
+    name: "Filter - LIMIT"
+    expression: "LIMIT > 0"
+  -
+    name: "Filter - ORDER BY"
+    expression: "ORDER_BY > 0"
+  -
+    name: "Filter - GROUP BY"
+    expression: "GROUP_BY > 0"
+
+# Define scenario(s) performance. List each scenario defination in the following.
+# Scenario: Combination of multiple filters joined by "&&".
+scenario: null
+
+# The report save path in CSV format
+save_path: "./report.csv"

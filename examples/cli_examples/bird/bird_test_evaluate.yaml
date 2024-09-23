@@ -1,33 +1,36 @@
 # ---------------- Core Arguments ----------------
 
 # The directory to save NL2SQL360 core data
-core_dir: "data"
+core_dir: "./nl2sql360_cache"
 
 # The NL2SQL360 core name, such that NL2SQL360 core data is saved to "core_dir/core_name.sqlite"
 core_name: "nl2sql360"
 
-# The dataset SQL dialect, "sqlite" by default
-sql_dialect: "sqlite"
+# The dataset SQL dialect, "SQLite" by default
+sql_dialect: "SQLite"
 
 # ---------------- Evaluation Arguments ----------------
 
 # The unique evaluation name to be saved in NL2SQL360
-eval_name: "SuperSQL"
+eval_name: "TA_SQL_GPT4o_COT"
 
 # The dataset name which has been imported in NL2SQL360
-eval_dataset: "spider_dev"
+eval_dataset: "bird_test"
 
 # The evaluation metrics, supporting three different metrics:
 # "ex": "Execution Accuracy"
 # "em": "Exact-Match Accuracy"
 # "ves": "Valid Efficiency Score"
+# "rves": "Reward-based Valid Efficiency Score"
+# "f1": "Soft-F1 Score"
 eval_metrics:
   - "ex"
-  - "em"
   - "ves"
+  - "rves"
+  - "f1"
 
 # The model predited file in the dataset, containing predited sqls in each line.
-pred_sqls_file: "tests/SuperSQL.sql"
+pred_sqls_file: "./TA_SQL_GPT4o_COT.sql"
 
 # Whether to enable Spider offcial evaluation script, generally set to True if the dataset is Spider or Spider series (e.g., Spider-Syn).
-enable_spider_eval: True
+enable_spider_eval: False

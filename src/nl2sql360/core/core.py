@@ -13,7 +13,7 @@ from ..database import *
 from ..parser import SQLParser
 from ..dataset import NL2SQLDataset
 from ..arguments import CoreArguments, DatasetArguments, EvaluationArguments
-from ..evaluator import BirdAccraucyEvaluator, SpiderAccraucyEvaluator, VesEvaluator
+from ..evaluator import BirdEXEvaluator, SpiderEXEMEvaluator, VesEvaluator, RVesEvaluator, F1Evaluator
 from ..filter import Filter, Scenario, serialize_filter, serialize_scenario
 
 
@@ -66,7 +66,7 @@ class _Core:
                 dataset.get_all_sql_complexity(),
                 dataset.get_all_database_domains()
             )), desc="Import dataset")):
-                parsed_sql = SQLParser(gold)
+                parsed_sql = SQLParser(gold, dialect=self.core_args.sql_dialect.lower())
                 table_item = self.models_dict[table_name](
                     id=id,
                     nlq=nlq,
@@ -107,22 +107,58 @@ class _Core:
                 eval_em = "em" in evaluation_args.eval_metrics and dataset_info.tables_json_path
                 if "em" in evaluation_args.eval_metrics and dataset_info.tables_json_path is None:
                     logger.warning(f"`EM` metric evaluation ignored, due to no imported `tables_file` for {evaluation_args.eval_dataset} dataset.")
-                evaluators.append(SpiderAccraucyEvaluator(eval_em=eval_em, eval_ex=True))
+                evaluators.append(SpiderEXEMEvaluator(eval_em=eval_em, eval_ex=True))
             else:
                 eval_em = "em" in evaluation_args.eval_metrics and dataset_info.tables_json_path
                 if "em" in evaluation_args.eval_metrics and dataset_info.tables_json_path is None:
                     logger.warning(f"`EM` metric evaluation ignored, due to no imported `tables_file` for {evaluation_args.eval_dataset} dataset.")
                 if eval_em:
-                    evaluators.append(SpiderAccraucyEvaluator(eval_em=eval_em, eval_ex=False))
-                evaluators.append(BirdAccraucyEvaluator())
+                    evaluators.append(SpiderEXEMEvaluator(eval_em=eval_em, eval_ex=False))
+                evaluators.append(BirdEXEvaluator(
+                    sql_dialect=self.core_args.sql_dialect,
+                    dbname=evaluation_args.db_name,
+                    user=evaluation_args.db_user,
+                    host=evaluation_args.db_host,
+                    password=evaluation_args.db_password,
+                    port=evaluation_args.db_port
+                ))
         elif "em" in evaluation_args.eval_metrics:
             if dataset_info.tables_json_path is None:
                 logger.warning(f"`EM` metric evaluation ignored, due to no imported `tables_file` for {evaluation_args.eval_dataset} dataset.")
             else:
-                evaluators.append(SpiderAccraucyEvaluator(eval_em=True, eval_ex=False))
+                evaluators.append(SpiderEXEMEvaluator(eval_em=True, eval_ex=False))
                 
         if "ves" in evaluation_args.eval_metrics:
-            evaluators.append(VesEvaluator(reuse_ex=evaluation_args.enable_spider_eval))
+            evaluators.append(VesEvaluator(
+                reuse_ex=evaluation_args.enable_spider_eval,
+                sql_dialect=self.core_args.sql_dialect,
+                dbname=evaluation_args.db_name,
+                user=evaluation_args.db_user,
+                host=evaluation_args.db_host,
+                password=evaluation_args.db_password,
+                port=evaluation_args.db_port
+            ))
+            
+        if "rves" in evaluation_args.eval_metrics:
+            evaluators.append(RVesEvaluator(
+                reuse_ex=evaluation_args.enable_spider_eval,
+                sql_dialect=self.core_args.sql_dialect,
+                dbname=evaluation_args.db_name,
+                user=evaluation_args.db_user,
+                host=evaluation_args.db_host,
+                password=evaluation_args.db_password,
+                port=evaluation_args.db_port
+            ))
+        
+        if "f1" in evaluation_args.eval_metrics:
+            evaluators.append(F1Evaluator(
+                sql_dialect=self.core_args.sql_dialect,
+                dbname=evaluation_args.db_name,
+                user=evaluation_args.db_user,
+                host=evaluation_args.db_host,
+                password=evaluation_args.db_password,
+                port=evaluation_args.db_port
+            ))
 
         with open(evaluation_args.pred_sqls_file, "r", encoding="utf-8") as f:
             pred_sqls = f.readlines()
@@ -202,7 +238,7 @@ class Core(_Core):
         if metric in METRIC_COL_MAPPING.keys():
             return True
         else:
-            logger.warning(f"`{metric}` metric is not supported, available metrics: (`ex`, `em`, `ves`, `qvt`).")
+            logger.warning(f"`{metric}` metric is not supported, available metrics: (`ex`, `em`, `ves`, `rves`, `f1`, `qvt`).")
             return False
     
     def query_overall_performance(self, dataset_name: str, metric: str, eval_name: str) -> DataFrame:
@@ -420,8 +456,14 @@ class Core(_Core):
             data = {"Subset": "Overall"}
             for metric in metrics:
                 df = self.query_overall_performance(dataset_name=dataset_name, metric=metric, eval_name=eval_name)
-                data.update(df.to_dict())
+                if df is not None:
+                    data.update(df.to_dict())
             results.append(DataFrame(data))
+            
+            
+            # `qvt`` metric only supports `overall performance``
+            if "qvt" in metrics:
+                metrics.remove("qvt")
             
             # Filter Performance
             
@@ -429,7 +471,8 @@ class Core(_Core):
                 data = dict()
                 for metric in metrics:
                     filter_df = self.query_filter_performance(dataset_name=dataset_name, filter=filter, metric=metric, eval_name=eval_name)
-                    data.update(filter_df.to_dict())
+                    if filter_df is not None:
+                        data.update(filter_df.to_dict())
                 results.append(DataFrame(data))
                 
             # Scenario Performance
@@ -438,7 +481,8 @@ class Core(_Core):
                 data = dict()
                 for metric in metrics:
                     scenario_df = self.query_scenario_performance(dataset_name=dataset_name, scenario=scenario, metric=metric, eval_name=eval_name)
-                    data.update(scenario_df.to_dict())
+                    if scenario_df is not None:
+                        data.update(scenario_df.to_dict())
                 results.append(DataFrame(data))
         
         df = pd.concat(results, ignore_index=True).sort_values(by=["Subset", "Evaluation"], ignore_index=True)

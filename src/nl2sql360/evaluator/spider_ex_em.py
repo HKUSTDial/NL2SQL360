@@ -2,7 +2,7 @@ from .test_suite_sql_eval.evaluation import evaluate, build_foreign_key_map_from
 from loguru import logger
 
 
-class SpiderAccraucyEvaluator:
+class SpiderEXEMEvaluator:
     
     def __init__(self, eval_ex, eval_em):
         self.eval_ex = eval_ex

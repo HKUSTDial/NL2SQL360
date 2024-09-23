@@ -6,8 +6,8 @@ core_dir: "data"
 # The NL2SQL360 core name, such that NL2SQL360 core data is saved to "core_dir/core_name.sqlite".
 core_name: "nl2sql360"
 
-# The dataset SQL dialect, "sqlite" by default.
-sql_dialect: "sqlite"
+# The dataset SQL dialect, "SQLite" by default.
+sql_dialect: "SQLite"
 
 # ---------------- Delete History Arguments ----------------
 
