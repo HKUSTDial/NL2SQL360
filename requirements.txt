@@ -7,3 +7,6 @@ tqdm
 loguru
 sqlalchemy
 pandas
+pyyaml
+nltk
+sqlparse

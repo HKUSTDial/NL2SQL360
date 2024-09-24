@@ -64,7 +64,7 @@ DATASET_DIR_PATH:
   - Save the YAML file to the path `DATASET_YAML_PATH`. Then run the command line:
 
     ```bash
-    nl2sql360 dataset DATASET_YAML_PATH
+    nl2sql360-cli dataset DATASET_YAML_PATH
     ```
 
 - Code Usage:
@@ -83,7 +83,7 @@ DATASET_DIR_PATH:
   - Save the YAML file to the path `DATASET_YAML_PATH`. Then run the command line:
 
     ```bash
-    nl2sql360 evaluate DATASET_YAML_PATH
+    nl2sql360-cli evaluate DATASET_YAML_PATH
     ```
 
 - Code Usage:
@@ -102,7 +102,7 @@ DATASET_DIR_PATH:
   - Save the YAML file to the path `DATASET_YAML_PATH`. Then run the command line:
 
     ```bash
-    nl2sql360 report DATASET_YAML_PATH
+    nl2sql360-cli report DATASET_YAML_PATH
     ```
 
   - The generated report will be in `save_path` specified in the YAML file.
@@ -122,7 +122,7 @@ DATASET_DIR_PATH:
   - Save the YAML file to the path `DATASET_YAML_PATH`. Then run the command line:
 
     ```bash
-    nl2sql360 delete DATASET_YAML_PATH
+    nl2sql360-cli delete DATASET_YAML_PATH
     ```
 
 - Code Usage:
